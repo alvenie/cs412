@@ -1,0 +1,8 @@
+<!-- quotes/templates/quotes/home.html -->
+{% extends 'quotes/base.html' %}
+{% load static %}
+
+{% block content %}
+    {{quote}} <br>
+    <img src="{% static image %}" alt="Quote Image">
+{% endblock %} 

@@ -1,0 +1,22 @@
+<!-- quotes/templates/quotes/home.html -->
+{% load static %}
+<html>
+    <head>
+        <title> Albert Einstein Quote of the Day </title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <nav>
+            <li><a href="{% url 'quote_page' %}">New Quote</a></li>
+        </nav>
+
+        <!-- put page specific content here -->
+         {% block content %}
+         {% endblock %}
+
+        <footer>
+            Page created by alvenie@bu.edu. <br>
+            The current time is {{time}}.
+        </footer>
+    </body>
+</html> 
