@@ -29,6 +29,20 @@ def home_page(request):
         "letter1": chr(random.randint(65,90)),
         "letter2": chr(random.randint(65,90)),
         "number": random.randint(1,10),
+
+    }
+    return render(request, template_name, context)   
+
+def about(request):
+    '''Respond to the URL 'about', delegate work to a template.'''
+
+    template_name = 'hw/about.html'
+    # a dict of context variables (key-value pairs)
+    context = {
+        "time": time.ctime(),
+        "letter1": chr(random.randint(65,90)),
+        "letter2": chr(random.randint(65,90)),
+        "number": random.randint(1,10),
         
     }
     return render(request, template_name, context)   
