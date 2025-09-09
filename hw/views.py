@@ -17,3 +17,9 @@ def home(request):
     '''
 
     return HttpResponse(response_text)
+
+def home_page(request):
+    '''Respond to the URL '', delegate work to a template.'''
+
+    template_name = 'hw/home.html'
+    return render(request, template_name)   
