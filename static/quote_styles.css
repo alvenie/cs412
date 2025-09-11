@@ -1,4 +1,8 @@
 /* static/quote_styles.css */
+body {
+    margin: 5px  15px 5px 15px;
+}
+
 footer {
     width: 100%;
     background:aliceblue;
@@ -8,3 +12,41 @@ footer {
     justify-content: center;
 }
 
+nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.heading-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.main-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;   
+}
+
+.show-div {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.about-p {
+    padding: 0px 40px 0px 40px;
+    text-align: center;
+}

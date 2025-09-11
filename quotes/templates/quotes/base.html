@@ -6,16 +6,23 @@
         <link rel="stylesheet" href="{% static 'quote_styles.css' %}">
     </head>
     <body>
-        <h1>Albert Einstein Quote of the Day</h1>
 
-        <nav>
-            <li><a href="{% url 'quote_page' %}">New Quote</a></li>
-            <li><a href="{% url 'show_page' %}">Show All</a></li>
-        </nav>
+        <div class="heading-div">
+            <h1>Albert Einstein Quote of the Day</h1>
+
+            <nav>
+                <li><a href="{% url 'quote_page' %}">New Quote</a></li>
+                <li><a href="{% url 'show_page' %}">Show All</a></li>
+                <li><a href="{% url 'about_page' %}">About</a></li>
+            </nav>
+        </div>
+
 
         <!-- put page specific content here -->
+        <div class="main-div">
          {% block content %}
          {% endblock %}
+        </div>
 
         <footer>
             Page created by alvenie@bu.edu. <br>

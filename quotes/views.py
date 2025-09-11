@@ -11,8 +11,8 @@ import random
 # Create your views here.
 
 # Lists of quotes and images.
-quote_list = ["A person who never made a mistake never tried anything new", 
-              "If you can't explain it simply, you don't understand it well enough",
+quote_list = ["A person who never made a mistake never tried anything new.", 
+              "If you can't explain it simply, you don't understand it well enough.",
               "I have no special talent. I am only passionately curious."]
 
 image_list = ["https://i.ibb.co/fYdJTNCT/albert1.jpg", "https://i.ibb.co/tTm1s3s2/albert2.jpg", "https://i.ibb.co/dJVVHMWF/albert3.jpg"]
@@ -60,9 +60,5 @@ def about(request):
     # a dict of context variables (key-value pairs)
     context = {
         "time": time.ctime(),
-        "letter1": chr(random.randint(65,90)),
-        "letter2": chr(random.randint(65,90)),
-        "number": random.randint(1,10),
-        
     }
     return render(request, template_name, context)   

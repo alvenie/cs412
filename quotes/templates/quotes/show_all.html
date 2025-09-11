@@ -4,12 +4,16 @@
 
 {% block content %}
     <!-- for loop to display all the quotes in the list -->
+    <h1> All quotes by Albert Einstein </h1>
     {% for q in quote %}
         <p> {{q}} </p>
     {% endfor %}
 
     <!-- for loop to display all the images in the list -->
-    {% for i in image %}
+    <h1> All images of Albert Einstein </h1>
+    <div class="show-div">
+        {% for i in image %}
         <img src="{{i}}" alt="Quote Image">
-    {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock %} 
