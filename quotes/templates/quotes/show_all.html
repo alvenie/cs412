@@ -1,0 +1,15 @@
+<!-- quotes/templates/quotes/show_all.html -->
+{% extends 'quotes/base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- for loop to display all the quotes in the list -->
+    {% for q in quote %}
+        <p> {{q}} </p>
+    {% endfor %}
+
+    <!-- for loop to display all the images in the list -->
+    {% for i in image %}
+        <img src="{{i}}" alt="Quote Image">
+    {% endfor %}
+{% endblock %} 
