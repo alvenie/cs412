@@ -26,8 +26,8 @@ def home_page(request):
     # a dict of context variables (key-value pairs)
     context = {
         "time": time.ctime(),
-        "quote": random.choice(quote_list),
-        "image": random.choice(image_list),
+        "quote": random.choice(QUOTE_LIST),
+        "image": random.choice(IMAGE_LIST),
     }
 
     return render(request, template_name, context)   
@@ -40,8 +40,8 @@ def quote(request):
 
     context = {
         "time": time.ctime(),
-        "quote": random.choice(quote_list),
-        "image": random.choice(image_list),
+        "quote": random.choice(QUOTE_LIST),
+        "image": random.choice(IMAGE_LIST),
     }
 
     return render(request, template_name, context)   
@@ -54,8 +54,8 @@ def show_all(request):
 
     context = {
         "time": time.ctime(),
-        "quote": quote_list,
-        "image": image_list,
+        "quote": QUOTE_LIST,
+        "image": IMAGE_LIST,
     }
 
     return render(request, template_name, context)   
@@ -69,5 +69,5 @@ def about(request):
     context = {
         "time": time.ctime(),
     }
-    
+
     return render(request, template_name, context)   
