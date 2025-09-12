@@ -7,6 +7,7 @@ from django.conf import settings
 from . import views
 
 # URL patterns specific to the quotes app:
+
 urlpatterns = [
     path(r'', views.home_page, name="home_page"),
     path(r'quote', views.quote, name="quote_page"),
