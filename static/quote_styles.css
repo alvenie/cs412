@@ -10,6 +10,11 @@ footer {
     bottom: 0px;
     display: flex;
     justify-content: center;
+    font-family: "Garamond", serif;
+}
+
+h1, h2, h4 {
+    font-family: "Georgia", serif;
 }
 
 nav {
@@ -17,6 +22,7 @@ nav {
     flex-direction: row;
     align-items: center;
     gap: 20px;
+    font-family: "Georgia", serif;
 }
 
 li {
@@ -49,4 +55,8 @@ a {
 .about-p {
     padding: 0px 40px 0px 40px;
     text-align: center;
+}
+
+p {
+    font-family: "Garamond", serif;
 }
