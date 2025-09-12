@@ -10,11 +10,12 @@ import random
 
 # Create your views here.
 
-# Lists of quotes and images.
+# Lists of quotes to be passed in as context.
 quote_list = ["A person who never made a mistake never tried anything new.", 
               "If you can't explain it simply, you don't understand it well enough.",
               "I have no special talent. I am only passionately curious."]
 
+# Lists of images to be passed in as context.
 image_list = ["https://i.ibb.co/fYdJTNCT/albert1.jpg", "https://i.ibb.co/tTm1s3s2/albert2.jpg", "https://i.ibb.co/dJVVHMWF/albert3.jpg"]
 
 def home_page(request):
