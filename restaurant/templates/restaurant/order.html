@@ -1,0 +1,78 @@
+<!-- restaurant/template/restaurant/order.html -->
+{% extends 'restaurant/base.html' %}
+
+{% block content %}
+
+    <h1>
+        Place an Order
+    </h1>
+
+    <form action="{% url 'confirmation_page' %}" method="POST">
+
+        {% csrf_token %}
+        
+        <!-- Outer container for flex row-->
+        <div class="input-div">
+
+            <h2>
+            Select your Items:
+            </h2>
+
+            <!-- Wrapping each input-label pair in a seperate div so that can be styled side by side -->
+            <div class="item">
+                <input type="checkbox" id="bm" name="BigMac">
+                <label for="bm">Big Mac $8</label>
+            </div>
+
+            <div class="item">
+                <input type="checkbox" id="ff" name="French Fries">
+                <label for="ff">French Fries $4</label>
+            </div>
+
+            <div class="item">
+                <input type="checkbox" id="cn" name="Chicken Nuggets">
+                <label for="cn">Chicken Nuggets $10</label>
+            </div>
+
+            <div class="item">
+                <input type="checkbox" id="s" name="Soda">
+                <label for="s">Soda $3</label>
+            </div>
+
+            <div>
+
+                <h2> Today's Special </h2>
+
+                <input type="checkbox" name="daily_special" id="daily_special">
+                <label for="daily_special">{{ daily_special.name }} - {{ daily_special.details }} - ${{ daily_special.price }}</label>
+                
+                <!-- hidden input field that always carries the name and price -->
+                <input type="hidden" name="special_name" value="{{ daily_special.name }}">
+                <input type="hidden" name="special_price" value="{{ daily_special.price }}">
+
+            </div>
+
+            <h2> Special Instructions </h2>
+
+            <label for="special_instructions"> Please share any special instructions: </label>
+            <input type="text" name="special_instructions" id="special_instructions">
+
+            <h2> Customer Information</h2>
+
+            <label for="name"> Name: </label>
+            <input type="text" name="name" id="name">
+
+            <label for="phone"> Phone: </label>
+            <input type="text" name="phone" id="phone">
+
+            <label for="email"> Email: </label>
+            <input type="text" name="email" id="email">
+
+        </div>
+
+            <h2> Place your order! </h2>
+            <input type="submit">
+
+    </form>
+
+{% endblock content%}
