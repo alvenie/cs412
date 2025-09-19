@@ -23,6 +23,7 @@ def order(request):
 
     template_name = 'restaurant/order.html'
     
+    # A list of dictionaries for the daily special.
     daily_special = [
         {
             'name': 'Gold Sauce',
@@ -35,10 +36,11 @@ def order(request):
             'price': 31.99,
         }
     ]
+
+    # Chooses a random daily special to display as today's special
     today_special = random.choice(daily_special)
     
     context= {
-
         "time": time.ctime(),
         'daily_special': today_special,
     }
@@ -51,12 +53,14 @@ def submit(request):
 
     template_name = "restaurant/confirmation.html"
 
+    # Add a random time to the current time between 30 min to 60 min.
     current_time = time.time()
 
     random_seconds = random.uniform(30*60, 60*60)
 
     ready_time = current_time + random_seconds
 
+    # Dictionary of prices of menu items
     prices = {
         'BigMac': 8.00,
         'Patty': 2.00,
@@ -82,9 +86,10 @@ def submit(request):
         phone = request.POST['phone']
         email = request.POST['email']
 
-                # Collect ordered items
+        # Collect ordered items
         order_items = []
         total = 0
+
         if big_mac:
             if extra_patty:
                 order_items.append('Big Mac with extra patty')
@@ -93,15 +98,19 @@ def submit(request):
             else:
                 order_items.append('Big Mac')
                 total += prices['BigMac']
+
         if french_fries:
             order_items.append('French Fries')
             total += prices['French Fries']
+
         if chicken_nuggets:
             order_items.append('Chicken Nuggets')
             total += prices['Chicken Nuggets']
+
         if soda:
             order_items.append('Soda')
             total += prices['Soda']
+            
         if request.POST.get('daily_special') and special_name and special_price:
             order_items.append(special_name)
             total += float(special_price)
