@@ -27,7 +27,7 @@ def order(request):
         {
             'name': 'Gold Sauce',
             'details': 'A special rich sauce made with secret ingredients.',
-            'price': 31.99,
+            'price': 21.99,
         },
         {
             'name': 'Bacon Ranch Deluxe',
@@ -59,10 +59,10 @@ def submit(request):
 
     prices = {
         'BigMac': 8.00,
+        'Patty': 2.00,
         'French Fries': 4.00,
         'Chicken Nuggets': 10.00,
-        'Soda': 3.00,
-        'daily_special': 31.99,
+        'Soda': 2.00,
     }
 
     # check if POST data was sent with the HTTP POST message:
@@ -70,12 +70,13 @@ def submit(request):
 
         # extract form fields into variables:
         big_mac = request.POST.get('BigMac')
+        extra_patty = request.POST.get('Extra Patty')
         french_fries = request.POST.get('French Fries')
         chicken_nuggets = request.POST.get('Chicken Nuggets')
         soda = request.POST.get('Soda')
         # Get daily special fields
         special_name = request.POST.get('special_name')
-        special_price_str = request.POST.get('special_price')
+        special_price = request.POST.get('special_price')
         special_instr = request.POST['special_instructions']
         name = request.POST['name']
         phone = request.POST['phone']
@@ -85,29 +86,34 @@ def submit(request):
         order_items = []
         total = 0
         if big_mac:
-            order_items.append(('Big Mac', prices['BigMac']))
-            total += prices['BigMac']
+            if extra_patty:
+                order_items.append('Big Mac with extra patty')
+                total += prices['BigMac'] 
+                total += prices['Extra Patty']
+            else:
+                order_items.append('Big Mac')
+                total += prices['BigMac']
         if french_fries:
-            order_items.append(('French Fries', prices['French Fries']))
+            order_items.append('French Fries')
             total += prices['French Fries']
         if chicken_nuggets:
-            order_items.append(('Chicken Nuggets', prices['Chicken Nuggets']))
+            order_items.append('Chicken Nuggets')
             total += prices['Chicken Nuggets']
         if soda:
-            order_items.append(('Soda', prices['Soda']))
+            order_items.append('Soda')
             total += prices['Soda']
-        if request.POST.get('daily_special') and special_name and special_price_str:
-            special_price = float(special_price_str)
-            order_items.append((special_name, special_price))
-            total += special_price
+        if request.POST.get('daily_special') and special_name and special_price:
+            order_items.append(special_name)
+            total += float(special_price)
 
         context = {
             'order_items': order_items,
-            'total': total,
+            'total': round(total, 2),
             'special_instr': special_instr,
             'name': name,
             'phone': phone,
             'email': email,
+            'time': time.ctime(),
             'r_time': time.ctime(ready_time),
         }
 

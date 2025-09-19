@@ -9,8 +9,26 @@
 
     <p> <b> Your order will be ready at: {{r_time}}.</b> </p>
 
-    <p> Your order is confirmed: </p>
+    <h2> Your order is confirmed: </h2>
 
-    
+    <div class="center-div">
+        {% for item in order_items%}
+        <p> {{item}} </p>
+        {% endfor %}
+    </div>
 
+    <h2> Special Instructions: </h2>
+
+    <p> {{special_instr}} </p>
+
+    <h3> Total: ${{total}} </h3>
+    <h2> Customer Infromation: </h2>
+
+    <div class="center-div">
+        <p> {{name}} </p>
+        <p> {{phone}} </p>
+        <p> {{email}} </p>
+    </div>
+
+    <h2> Thank you for ordering at McDonalds! </h2>
 {% endblock content %}
