@@ -89,7 +89,7 @@ def submit(request):
             if extra_patty:
                 order_items.append('Big Mac with extra patty')
                 total += prices['BigMac'] 
-                total += prices['Extra Patty']
+                total += prices['Patty']
             else:
                 order_items.append('Big Mac')
                 total += prices['BigMac']
