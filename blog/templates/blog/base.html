@@ -11,6 +11,12 @@
         
         <h1>Our Blog</h1>
 
+        <nav>
+            <ul>
+                <li><a href="{% url 'random' %}">Random</a></li>
+                <li><a href="{% url 'show_all' %}">Show All</a></li>
+            </ul>
+        </nav>
     <!-- substitute in the specific content here -->
     {% block content %}
     {% endblock %}

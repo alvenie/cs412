@@ -18,8 +18,10 @@
                     {{ article.text }}
                 </p>
             </div>
-
-            <img src="{{ article.image_url }}" alt="">
+            
+            <a href="{% url 'article' article.pk %}">
+                <img src="{{ article.image_url }}" alt="">
+            </a>
 
         </article>
         <hr>
