@@ -3,12 +3,12 @@
 # description: The views.py file specific to the mini insta app
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 from .models import Profile
 
 # Create your views here.
 
-def ProfileListView(ListView):
+class ProfileListView(ListView):
     '''Define a view class to show all mini insta Profiles.'''
 
     model = Profile
