@@ -1,4 +1,7 @@
 # mini_insta/views.py
+# auther: Chonghao Chen (alvenie@bu.edu), 9/25/2025
+# description: The views.py file specific to the mini insta app
+
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import Profile

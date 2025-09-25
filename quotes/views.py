@@ -1,5 +1,5 @@
 # file: quotes/views.py
-# auther: Alven Chen (alvenie@bu.edu), 9/8/2025
+# auther: Chonghao Chen (alvenie@bu.edu), 9/8/2025
 # description: The views.py file specific to the quotes app
 
 from django.shortcuts import render

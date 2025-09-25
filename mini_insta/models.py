@@ -1,4 +1,7 @@
 # mini_insta/models.py
+# auther: Chonghao Chen (alvenie@bu.edu), 9/25/2025
+# description: The models.py file specific to the mini insta app
+
 from django.db import models
 
 # Create your models here.
