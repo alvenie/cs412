@@ -1,0 +1,24 @@
+<!-- mini_insta/base.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 9/25/2025 -->
+<!-- Base template for mini_insta app -->
+
+{% load static %}
+
+<html>
+    <head>
+        <title>Mini Insta</title>
+        <link rel="stylesheet" href="{% static 'styles_mini_insta.css' %}">
+    </head>
+
+    <body>
+        
+        <h1>Mini Insta</h1>
+
+    <!-- substitute in the specific content here -->
+    {% block content %}
+    {% endblock %}
+
+    </body>
+</html>
