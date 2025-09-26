@@ -1,0 +1,23 @@
+<!--mini_insta/show_profile.html-->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 9/26/2025 -->
+<!-- Show profile template for mini_insta app -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+<div class="header-profile">
+    <h1>Showing profile: @{{ profile.display_name }}</h1>
+</div>
+
+<main class="profile-detail">
+    <div class="profile-info">
+        <h2>@{{ profile.display_name }}</h2>
+        <p>Username: {{ profile.username}}</p>
+        <img src="{{ profile.profile_image_url }}" alt="">
+    </div>
+</main>
+
+{% endblock %}
