@@ -8,7 +8,10 @@
 
 {% block content %}
 
+
 <main class="profile-detail">
+
+    <!-- Main profile info section -->
     <div class="profile-info">
 
         <img src="{{ profile.profile_image_url }}" alt="profile" class="profile-avatar">
@@ -19,6 +22,7 @@
         </div>
     </div>
 
+    <!-- Bio and stats section -->
     <div class="profile-bio">
         <p class="bio-text">
             {{ profile.bio_text|linebreaksbr }}
@@ -29,7 +33,7 @@
             <p class="stats">
                 <strong>Posts:</strong> TBD
             </p>
-            
+
             <p class="stats">
                 <strong>Followers:</strong> TBD
             </p>

@@ -75,17 +75,17 @@ img {
 .profile-info {
     display: flex;
     align-items: center;
-    gap: 32px; /* Space between image and text */
+    gap: 32px;
     justify-content: flex-start;
     margin-bottom: 20px;
 }
 
 .profile-avatar {
-    width: 120px;         /* Instagram's profile pictures are large and circular */
+    width: 120px;  
     height: 120px;
-    border-radius: 50%;   /* Make it a circle */
-    object-fit: cover;    /* Crops image nicely inside circle */
-    border: 2px solid #dbdbdb; /* Subtle Instagram-style border */
+    border-radius: 50%;  
+    object-fit: cover;   
+    border: 2px solid #dbdbdb; 
     background: #fafafa;
 }
 
