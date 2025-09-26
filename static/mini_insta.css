@@ -22,16 +22,6 @@ nav {
     font-family: "Georgia", serif;
 }
 
-li {
-    list-style-type: none;
-    color: darkgoldenrod;
-}
-
-a {
-    text-decoration: none;
-    color: darkgoldenrod;
-}
-
 p {
     font-family: "Garamond", serif;
 }
@@ -123,6 +113,12 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+
 }
 
 main {
