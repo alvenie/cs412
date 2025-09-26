@@ -58,6 +58,7 @@ p {
     padding: 20px;
     text-align: center;
     border-bottom: 1px solid #ddd;
+    background-color: black;
 }
 
 .header h1 {
@@ -75,4 +76,66 @@ img {
     width: 225px;
     height: 225px;
     object-fit: cover;
+}
+
+.profile-detail {
+    margin: 20px;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 32px; /* Space between image and text */
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.profile-avatar {
+    width: 120px;         /* Instagram's profile pictures are large and circular */
+    height: 120px;
+    border-radius: 50%;   /* Make it a circle */
+    object-fit: cover;    /* Crops image nicely inside circle */
+    border: 2px solid #dbdbdb; /* Subtle Instagram-style border */
+    background: #fafafa;
+}
+
+.profile-meta h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 0 0 8px 0;
+}
+
+.profile-meta p {
+    color: #888;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+
+footer {
+    margin-top: auto;
+    background-color: black;
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+main {
+    flex: 1;
+    padding-bottom: 50px; /* Space for the footer */
+}
+
+.bio-text {
+    font-size: 24px;
+}
+
+.profile-data{
+    font-size: 20px;
+    display: flex;
+    justify-content: space-evenly;
 }

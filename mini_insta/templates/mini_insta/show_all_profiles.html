@@ -16,9 +16,14 @@
     <!-- Scriplet code for a for loop -->
     {% for profile in profiles %}
         <div class="profile">
+
             <h2>@{{ profile.display_name }}</h2>
             <p>{{ profile.username}}</p>
-            <img src="{{ profile.profile_image_url }}" alt="">
+
+            <a href="{% url 'show_profile' profile.pk %}">
+                <img src="{{ profile.profile_image_url }}" alt="">
+            </a>
+
         </div>
 
     {% endfor %}

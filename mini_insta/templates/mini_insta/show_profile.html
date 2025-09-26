@@ -8,16 +8,38 @@
 
 {% block content %}
 
-<div class="header-profile">
-    <h1>Showing profile: @{{ profile.display_name }}</h1>
-</div>
-
 <main class="profile-detail">
     <div class="profile-info">
-        <h2>@{{ profile.display_name }}</h2>
-        <p>Username: {{ profile.username}}</p>
-        <img src="{{ profile.profile_image_url }}" alt="">
+
+        <img src="{{ profile.profile_image_url }}" alt="profile" class="profile-avatar">
+
+        <div class="profile-meta">
+            <h2>@{{ profile.display_name }}</h2>
+            <p>{{ profile.username }}</p>
+        </div>
     </div>
+
+    <div class="profile-bio">
+        <p class="bio-text">
+            {{ profile.bio_text|linebreaksbr }}
+        </p>
+        <hr>
+        <div class="profile-data">
+
+            <p class="stats">
+                <strong>Posts:</strong> TBD
+            </p>
+            
+            <p class="stats">
+                <strong>Followers:</strong> TBD
+            </p>
+
+            <p class="stats">
+                <strong>Following:</strong> TBD
+            </p>
+
+        </div>
 </main>
+
 
 {% endblock %}

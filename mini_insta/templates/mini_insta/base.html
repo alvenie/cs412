@@ -16,12 +16,20 @@
         
         <div class="header">
 
-            <h1>Mini Insta</h1>
+            <a href ="{% url 'show_all_profiles' %}">
+                <h1>Mini Insta</h1>
+            </a>
 
         </div>
-    <!-- substitute in the specific content here -->
-    {% block content %}
-    {% endblock %}
 
+        <!-- substitute in the specific content here -->
+        {% block content %}
+        {% endblock %}
+
+        <footer>
+            <nav>
+                <a href="{% url 'show_all_profiles' %}">View All Profiles</a>
+            </nav>
+        </footer>
     </body>
 </html>
