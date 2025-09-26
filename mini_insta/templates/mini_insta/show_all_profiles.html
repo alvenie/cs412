@@ -5,3 +5,24 @@
 <!-- Show template for mini_insta app -->
 
 {% extends 'mini_insta/base.html' %}
+
+{%block content%}
+<h1>Showing all profiles</h1>
+
+<main class="grid-container">
+    <!-- Scriplet code for a for loop -->
+    {% for profile in profiles %}
+        <profile>
+            <div>
+                <h2>{{ profile.display_name }}</h2>
+                <p>{{ profile.username}}</p>
+            </div>
+            
+            <img src="{{ profile.profile_image_url }}" alt="">
+
+        </profile>
+        <hr>
+    {% endfor %}
+</main>
+
+{% endblock %}
