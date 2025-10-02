@@ -18,3 +18,25 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.display_name}'
+    
+class Post(models.Model):
+    '''Encapsulates the data of a mini insta post by a user'''
+
+    # define the data attributes of a Post object
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    caption = models.TextField(blank=True)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.caption}'
+    
+class Photo(models.Model):
+    '''Encapsulates the data of a mini insta photo associated with a post'''
+
+    # define the data attributes of a Post object
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    image_url = models.URLField(blank=True)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Photo {self.pk} for Post {self.post.pk} taken at {self.timestamp}"
