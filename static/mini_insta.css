@@ -77,6 +77,28 @@ p {
     margin: 20px;
 }
 
+.post-detail{
+    margin: 20px;
+}
+
+.post-main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.post-img{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    object-fit: cover;
+}
+
+.caption-p{
+    display: flex;
+    text-align: center;
+}
+
 .profile-info {
     display: flex;
     align-items: center;
@@ -139,4 +161,23 @@ main {
     font-size: 20px;
     display: flex;
     justify-content: space-evenly;
+}
+
+.post-grid {
+    display: flex;
+    flex-wrap: wrap; 
+}
+
+.post-item {
+    /* Each item will take up roughly 1/3 of the width, minus the gap */
+    flex-basis: calc(33.333% - 1rem); 
+    flex-grow: 1;
+}
+
+/* Ensure images fill their container without distorting */
+.post-item img {
+    width: 100%;
+    height: 100%; /* Make this equal to width for a square */
+    object-fit: cover; /* Crops the image to fit the container */
+    display: block; /* Removes any extra space below the image */
 }

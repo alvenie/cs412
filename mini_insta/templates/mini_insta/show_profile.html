@@ -43,22 +43,25 @@
             </p>
 
         </div>
-        <div>
+        <div class="post-grid">
             <!-- loop to get all post from the profile -->
             {% for post in profile.get_all_posts %}
                 <!-- get the first photo of the post -->
-                {% with photo=post.get_all_photos|first %}
-                    <!-- checks if the photo exists and there is a url -->
-                    {% if photo and photo.image_url %}
-                        <div>
-                            <img src="{{photo.image_url}}" alt="First image of the post" class="post-img">
-                        </div>
-                    {% else %}
-                        <div>
-                            <img src="https://i.postimg.cc/9Q2RqNVW/no-img-avail.jpg" alt="No image available" class="post-img">
-                        </div>
-                    {% endif %}
-                {% endwith %}
+
+                <div class="post-item">
+                    {% with photo=post.get_all_photos|first %}
+                        <!-- checks if the photo exists and there is a url -->
+                        {% if photo and photo.image_url %}
+                            <a href="{% url 'show_post' post.pk %}">
+                                <img src="{{photo.image_url}}" alt="First image of the post" class="post-img">
+                            </a>
+                        {% else %}
+                            <a href="{% url 'show_post' post.pk %}">
+                                <img src="https://i.postimg.cc/9Q2RqNVW/no-img-avail.jpg" alt="No image available" class="post-img">
+                            </a>
+                        {% endif %}
+                    {% endwith %}
+                </div>
             {% endfor %}
         </div>  
 </main>
