@@ -29,6 +29,11 @@
         <footer>
             <nav>
                 <a href="{% url 'show_all_profiles' %}">View All Profiles</a>
+                <!-- if statement to check if a 'profile' object was passed to this template from the view -->
+                <!-- only renders on pages which this is true -->
+                {% if profile %}
+                    <a href="{% url 'create_post_form' profile.pk %}">Create New Post</a>
+                {% endif %}
             </nav>
         </footer>
     </body>

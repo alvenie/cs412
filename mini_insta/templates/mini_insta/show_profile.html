@@ -31,15 +31,15 @@
         <div class="profile-data">
 
             <p class="stats">
-                <strong>Posts:</strong> TBD
+                <strong>Posts:</strong> {{ profile.get_all_posts|length }}
             </p>
 
             <p class="stats">
-                <strong>Followers:</strong> TBD
+                <strong>Followers:</strong> 0
             </p>
 
             <p class="stats">
-                <strong>Following:</strong> TBD
+                <strong>Following:</strong> 0
             </p>
 
         </div>
@@ -59,6 +59,7 @@
                             <a href="{% url 'show_post' post.pk %}">
                                 <img src="https://i.postimg.cc/9Q2RqNVW/no-img-avail.jpg" alt="No image available" class="post-img">
                             </a>
+
                         {% endif %}
                     {% endwith %}
                 </div>
