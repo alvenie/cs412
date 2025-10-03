@@ -19,6 +19,13 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.display_name}'
     
+    def get_all_posts(self):
+        '''Returns a QuerySet of posts by this profile'''
+
+        # filter post objects by their profile and order them by timestamp in descending order
+        posts = Post.objects.filter(profile = self).order_by('-timestamp') 
+        return posts
+    
 class Post(models.Model):
     '''Encapsulates the data of a mini insta post by a user'''
 
@@ -30,6 +37,12 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.caption}'
     
+    def get_all_photos(self):
+        '''Returns a QuerySet of photos associated with this post'''
+
+        photos = self.photo_set.all()
+        return photos
+
 class Photo(models.Model):
     '''Encapsulates the data of a mini insta photo associated with a post'''
 

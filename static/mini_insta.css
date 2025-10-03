@@ -62,12 +62,17 @@ p {
     text-align: center;
 }
 
-img {
+.profile-img {
     width: 225px;
     height: 225px;
     object-fit: cover;
 }
 
+.post-img {
+    width: 500px;
+    height: 500px;
+    object-fit: contain;
+}
 .profile-detail {
     margin: 20px;
 }
