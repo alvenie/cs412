@@ -145,7 +145,6 @@ footer {
 a {
     text-decoration: none;
     color: white;
-
 }
 
 main {
@@ -171,7 +170,9 @@ main {
 .post-item {
     /* Each item will take up roughly 1/3 of the width, minus the gap */
     flex-basis: calc(33.333% - 1rem); 
-    flex-grow: 1;
+
+    /* Forces the container to be square */
+    aspect-ratio: 1 / 1;
 }
 
 /* Ensure images fill their container without distorting */
@@ -180,4 +181,49 @@ main {
     height: 100%; /* Make this equal to width for a square */
     object-fit: cover; /* Crops the image to fit the container */
     display: block; /* Removes any extra space below the image */
+}
+
+.display-a {
+    text-decoration: none;
+    color: black;
+}
+
+/* Basic styling for all buttons and links styled as buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn[type="submit"] {
+    background-color: #007bff;
+}
+.btn[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.btn-cancel {
+    background-color: #6c757d;
+}
+.btn-cancel:hover {
+    background-color: #5a6268;
+}
+
+.form-actions{
+    display: flex;
+    justify-content: center;
+}
+
+.post-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

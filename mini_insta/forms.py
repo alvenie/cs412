@@ -1,0 +1,17 @@
+# mini_insta/forms.py
+# define the forms that we use for create/update/delete operations
+
+from django import forms
+from .models import *
+
+class CreatePostForm(forms.ModelForm):
+    '''A form to add a post to the database'''
+
+    # Add a non-model field for the photo's URL 
+    # Make it not required to allow posts without images.
+    image_url = forms.URLField(label='Image URL', required=False)
+
+    class Meta:
+        '''Associate this form with a model from our database'''
+        model = Post
+        fields = ['caption']

@@ -3,8 +3,10 @@
 # description: The views.py file specific to the mini insta app
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
-from .models import Profile, Post
+from django.views.generic import ListView, DetailView, CreateView
+from .models import Profile, Post, Photo
+from .forms import CreatePostForm
+from django.urls import reverse
 
 # Create your views here.
 
@@ -28,3 +30,51 @@ class PostDetailView(DetailView):
     model = Post
     template_name = 'mini_insta/show_post.html'
     context_object_name = 'post'
+
+class CreatePostView(CreateView):
+    '''A view to handle creation of a post on a profile'''
+
+    form_class = CreatePostForm
+    template_name = 'mini_insta/create_post_form.html'
+
+    def get_success_url(self):
+        '''Provide a URL to redirect to after creating a new Post.'''
+
+        # Redirect back to the profile page, not an 'article' page
+        return reverse('show_post', kwargs={'pk': self.object.pk})
+    
+    def get_context_data(self, **kwargs):
+        '''Passes the parent Profile object to the template.'''
+
+        # Get the default context
+        context = super().get_context_data(**kwargs)
+
+        # Get the Profile object using the pk from the URL
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+
+        # Add the profile to the context dictionary
+        context['profile'] = profile
+
+        return context
+
+    def form_valid(self, form):
+        '''Links the new Post to the correct Profile before saving.'''
+
+        # Get the Profile object from the URL's pk
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+
+        # Assign this profile to the new post's profile field
+        form.instance.profile = profile
+
+        # Let the parent class save the object
+        response = super().form_valid(form)
+
+        image_url = form.cleaned_data.get('image_url')
+
+        if image_url:
+            Photo.objects.create(
+                post = self.object,
+                image_url = image_url
+            )
+
+        return response
