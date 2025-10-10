@@ -61,20 +61,36 @@ class CreatePostView(CreateView):
         '''Links the new Post to the correct Profile before saving.'''
 
         # Get the Profile object from the URL's pk
-        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        #profile = Profile.objects.get(pk=self.kwargs['pk'])
 
         # Assign this profile to the new post's profile field
-        form.instance.profile = profile
+        #form.instance.profile = profile
 
         # Let the parent class save the object
+        #response = super().form_valid(form)
+
+        #image_url = form.cleaned_data.get('image_url')
+
+        #if image_url:
+        #    Photo.objects.create(
+        #        post = self.object,
+        #        image_url = image_url
+        #    )
+        
+        # Assign the profile to the new post object before saving the form.
+        # The profile's pk is retrieved from the URL.
+        form.instance.profile = Profile.objects.get(pk=self.kwargs['pk'])
+
+        # Let the parent CreateView's form_valid method save the Post.
+        # This sets self.object to the newly created post instance.
         response = super().form_valid(form)
 
-        image_url = form.cleaned_data.get('image_url')
+        # Retrieve the list of uploaded files from the request.
+        uploaded_images = self.request.FILES.getlist('images')
 
-        if image_url:
-            Photo.objects.create(
-                post = self.object,
-                image_url = image_url
-            )
+        # Loop through the uploaded files and create a Photo object for each one.
+        for image_file in uploaded_images:
+            Photo.objects.create(post=self.object, image_file=image_file)
 
+        # Return the HttpResponseRedirect object.
         return response

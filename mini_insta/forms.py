@@ -10,7 +10,7 @@ class CreatePostForm(forms.ModelForm):
 
     # Add a non-model field for the photo's URL 
     # Make it not required to allow posts without images.
-    image_url = forms.URLField(label='Image URL', required=False)
+    # image_url = forms.URLField(label='Image URL', required=False)
 
     class Meta:
         '''Associate this form with a model from our database'''

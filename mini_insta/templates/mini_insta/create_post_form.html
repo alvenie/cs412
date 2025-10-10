@@ -15,16 +15,21 @@
 
 <div class="post-div">
 
-    <!-- form to handle submission -->
-    <form action="{% url 'create_post_form' profile.pk %}" method = "POST">
+    <form action="{% url 'create_post_form' profile.pk %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
-            {{form.as_table}}
+            {{ form.as_table }}
+            
+            <tr>
+                <th><label for="id_images">Images:</label></th>
+                <td>
+                    <input type="file" name="images" id="id_images" multiple>
+                </td>
+            </tr>
         </table>
         <div class="form-actions">
             <button type="submit" class="btn">Create Post</button>
             
-            <!-- cancel button brings the user back to profile page -->
             <a href="{% url 'show_profile' profile.pk %}" class="btn btn-cancel">Cancel</a>
         </div>
     </form>
