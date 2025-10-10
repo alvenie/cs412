@@ -67,10 +67,10 @@ class Photo(models.Model):
     def get_image_url(self):
         '''Returns the URL to the image'''
 
-        if self.profile_image_url:
-            return self.profile_image_url
-        
         if self.image_file:
             return self.image_file
         
-        return ''
+        if self.image_url:
+            return self.image_url
+        
+        return 'https://i.postimg.cc/9Q2RqNVW/no-img-avail.jpg'

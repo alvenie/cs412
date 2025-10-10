@@ -26,24 +26,11 @@
         <div>
             {% for photo in post.get_all_photos %}
 
-                <!-- if the photo exists and there is an image url associated with it display it -->
-                {% if photo and photo.image_url %}
+                <img src="{{ photo.get_image_url }}" alt="Image for post" class="post-img">
+            
+            {% empty %}
 
-                    <img src="{{photo.image_url}}" alt="Image for post" class="post-img">
-                
-                <!-- else display image not found if there is a blank url -->
-                {% else %}
-
-                    <img src="https://i.postimg.cc/9Q2RqNVW/no-img-avail.jpg" alt="No image available" class="post-img">
-
-                {% endif %}
-
-                <!-- if the for loop returns empty then display photo not found -->
-                {% empty %}
-
-                    <div>
-                        <img src="https://i.postimg.cc/9Q2RqNVW/no-img-avail.jpg" alt="No image available" class="post-img">
-                    </div>
+                <img src="https://i.postimg.cc/9Q2RqNVW/no-img-avail.jpg" alt="No image available" class="post-img">
 
             {% endfor %}
         </div>
