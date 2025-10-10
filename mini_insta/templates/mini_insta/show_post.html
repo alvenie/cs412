@@ -17,6 +17,12 @@
                 <h2>@{{ post.profile.display_name }}</h2>
             </a>
             <p>{{ post.profile.username }}</p>
+            <div>
+                <a href="{% url 'update_post' post.pk %}" class="update-a">Update Post</a>
+            </div>
+            <div>
+                <a href="{% url 'delete_post' post.pk %}" class="update-a">Delete Post</a>       
+            </div>
         </div>
     </div>
 

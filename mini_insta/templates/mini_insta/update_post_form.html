@@ -1,33 +1,31 @@
-<!-- mini_insta/update_profile_form.html -->
+<!-- mini_insta/update_post_form.html -->
 <!-- Chonghao Chen --> 
 <!-- alvenie@bu.edu --> 
 <!-- 10/10/2025 -->
-<!-- Update profile form template for mini_insta app -->
+<!-- Update post form template for mini_insta app -->
 
 {% extends 'mini_insta/base.html' %}
 
 {% block content %}
 
 <div class="profile-detail">
-    <h1>Edit Your Profile</h1>
+    <h1>Update Post</h1>
     <hr>
 </div>
 
 <div class="post-div">
 
-    <!-- form for updating the profile with save and cancel buttons -->
-    <form method="post" action="">
-        
+    <!-- form for save and cancel changes -->
+    <form method="post">
         {% csrf_token %}
-
         <table>
             {{ form.as_table }}
         </table>
         
         <div class="form-actions">
             <button type="submit" class="btn">Save Changes</button>
-
-            <a href="{% url 'show_profile' profile.pk %}" class="btn btn-cancel">Cancel</a>
+            
+            <a href="{% url 'show_post' object.pk %}" class="btn btn-cancel">Cancel</a>
         </div>
     </form>
 </div>

@@ -3,7 +3,7 @@
 # description: The views.py file specific to the mini insta app
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Profile, Post, Photo
 from .forms import CreatePostForm, UpdateProfileForm
 from django.urls import reverse
@@ -115,3 +115,42 @@ class UpdateProfileView(UpdateView):
         
         # Reverse the URL pattern for the profile detail page
         return reverse('show_profile', kwargs={'pk': pk})
+    
+class DeletePostView(DeleteView):
+    """A view to handle deleting a post."""
+    
+    # The model this view will operate on
+    model = Post
+    
+    # The template to render for confirmation
+    template_name = "mini_insta/delete_post_form.html"
+
+    def get_context_data(self, **kwargs):
+        """Pass the post and profile objects to the template."""
+        context = super().get_context_data(**kwargs)
+        # self.object is the Post instance that the view is operating on
+        context['post'] = self.object
+        context['profile'] = self.object.profile
+        return context
+
+    def get_success_url(self):
+        """Redirect to the user's profile page after deleting a post."""
+        # Get the profile associated with the post that was just deleted
+        profile_pk = self.object.profile.pk
+        return reverse('show_profile', kwargs={'pk': profile_pk})
+    
+class UpdatePostView(UpdateView):
+    """A view to handle updating a post."""
+    
+    # The model this view will operate on
+    model = Post
+    
+    # The template to render the update form
+    template_name = "mini_insta/update_post_form.html"
+    
+    # Specify which fields from the Post model can be edited
+    fields = ['caption']
+
+    def get_success_url(self):
+        """Redirect to the post's detail page after a successful update."""
+        return reverse('show_post', kwargs={'pk': self.object.pk})

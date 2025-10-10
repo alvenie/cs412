@@ -24,3 +24,4 @@ class UpdateProfileForm(forms.ModelForm):
         '''Associate this form with a model from our database'''
         model = Profile
         fields = ['username', 'profile_image_url', 'bio_text']
+

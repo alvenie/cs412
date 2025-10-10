@@ -1,0 +1,38 @@
+<!-- mini_insta/delete_post_form.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 10/10/2025 -->
+<!-- Delete post form template for mini_insta app -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+<div class="post-div">
+    <h1>Delete Post</h1>
+    <p>Are you sure you want to delete this post?</p>
+    <hr>
+
+    <div class="post-div">
+
+        <!-- Get the first photo associated with the post, display nothing if there is none-->
+        {% with photo=post.get_all_photos|first %}
+            {% if photo %}
+                <img src="{{ photo.get_image_url }}" alt="Post image" style="max-width: 500px; border-radius: 8px;">
+            {% endif %}
+        {% endwith %}
+        <p>"{{ post.caption|truncatechars:50 }}"</p>
+    </div>
+
+    <!-- form for delete and cancel -->
+    <div class="form-actions">
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn">Confirm Delete</button>
+
+        <a href="{% url 'show_profile' profile.pk %}" class="btn btn-cancel">Cancel</a>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
