@@ -3,9 +3,9 @@
 # description: The views.py file specific to the mini insta app
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Profile, Post, Photo
-from .forms import CreatePostForm
+from .forms import CreatePostForm, UpdateProfileForm
 from django.urls import reverse
 
 # Create your views here.
@@ -94,3 +94,24 @@ class CreatePostView(CreateView):
 
         # Return the HttpResponseRedirect object.
         return response
+
+class UpdateProfileView(UpdateView):
+    '''A view to handle updating a user's profile.'''
+
+    # The form to use for this view
+    form_class = UpdateProfileForm
+    
+    # The model this view will update
+    model = Profile
+    
+    # The template to render the form
+    template_name = "mini_insta/update_profile_form.html"
+
+    def get_success_url(self):
+        '''Define where to redirect after a successful form submission.'''
+        
+        # Get the primary key of the profile being updated
+        pk = self.kwargs['pk']
+        
+        # Reverse the URL pattern for the profile detail page
+        return reverse('show_profile', kwargs={'pk': pk})

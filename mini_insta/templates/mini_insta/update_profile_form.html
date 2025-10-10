@@ -1,0 +1,33 @@
+<!-- mini_insta/update_profile_form.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 10/10/2025 -->
+<!-- Update profile form template for mini_insta app -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+<div class="profile-detail">
+    <h1>Edit Your Profile</h1>
+    <hr>
+</div>
+
+<div class="post-div">
+
+    <form method="post" action="">
+        
+        {% csrf_token %}
+
+        <table>
+            {{ form.as_table }}
+        </table>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn">Save Changes</button>
+
+            <a href="{% url 'show_profile' profile.pk %}" class="btn btn-cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -19,6 +19,7 @@
         <div class="profile-meta">
             <h2>@{{ profile.display_name }}</h2>
             <p>{{ profile.username }}</p>
+            <a href="{% url 'update_profile' profile.pk %}" class="update-a">Edit Profile</a>
         </div>
     </div>
 
