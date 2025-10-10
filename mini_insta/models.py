@@ -68,7 +68,7 @@ class Photo(models.Model):
         '''Returns the URL to the image'''
 
         if self.image_file:
-            return self.image_file
+            return self.image_file.url
         
         if self.image_url:
             return self.image_url
