@@ -151,6 +151,11 @@ a {
     color: purple;
 }
 
+.follow-a {
+    text-decoration: none;
+    color: black;
+}
+
 main {
     flex: 1;
     padding-bottom: 50px; /* Space for the footer */

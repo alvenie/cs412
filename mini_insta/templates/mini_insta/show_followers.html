@@ -1,0 +1,26 @@
+<!--mini_insta/show_followers.html-->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 10/16/2025 -->
+<!-- Show followers template for mini_insta app -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+<h2>Followers of @{{ profile.display_name }}</h2>
+    <hr>
+    <div>
+        {% for follower in profile.get_followers %}
+            <div>
+                <a href="{% url 'show_profile' follower.pk %}">
+                    <img src="{{ follower.profile_image_url }}" alt="Avatar for {{ follower.display_name }}">
+                    <span>@{{ follower.display_name }}</span>
+                </a>
+            </div>
+        {% empty %}
+            <p>This profile has no followers yet.</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

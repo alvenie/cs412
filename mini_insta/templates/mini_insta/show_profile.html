@@ -36,11 +36,11 @@
             </p>
 
             <p class="stats">
-                <strong>Followers:</strong> 0
+                <a href="{% url 'show_followers' profile.pk %}" class="follow-a"><strong>Followers:</strong></a> {{ profile.get_num_followers }}
             </p>
 
             <p class="stats">
-                <strong>Following:</strong> 0
+                <a href="{% url 'show_following' profile.pk %}" class="follow-a"><strong>Following:</strong></a> {{ profile.get_num_following }}
             </p>
 
         </div>

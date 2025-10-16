@@ -4,7 +4,7 @@
 
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Profile, Post, Photo
+from .models import Profile, Post, Photo, Follow
 from .forms import CreatePostForm, UpdateProfileForm
 from django.urls import reverse
 
@@ -154,3 +154,17 @@ class UpdatePostView(UpdateView):
     def get_success_url(self):
         """Redirect to the post's detail page after a successful update."""
         return reverse('show_post', kwargs={'pk': self.object.pk})
+    
+class ShowFollowersDetailView(DetailView):
+    '''A view to handle showing follower details'''
+
+    model = Profile
+    template_name = 'mini_insta/show_followers.html'
+    context_object_name = 'profile'
+
+class ShowFollowingDetailView(DetailView):
+    '''A view to handle showing following details'''
+
+    model = Profile
+    template_name = 'mini_insta/show_following.html'
+    context_object_name = 'profile'

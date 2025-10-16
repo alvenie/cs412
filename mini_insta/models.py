@@ -26,6 +26,36 @@ class Profile(models.Model):
         posts = Post.objects.filter(profile = self).order_by('-timestamp') 
         return posts
     
+    def get_followers(self):
+        '''Return a list of profiles who follow the current profile'''
+
+        # find all follow object where it is following this profile
+        follower_relations = Follow.objects.filter(profile=self)
+
+        followers = [relation.follower_profile for relation in follower_relations]
+
+        return followers
+    
+    def get_num_followers(self):
+        '''Return the count of followers'''
+
+        return Follow.objects.filter(profile=self).count()
+
+    def get_following(self):
+        '''Return a list of profiles who the current profile follows'''
+
+        # Find all 'Follow' objects where this profile is the follower
+        follow_relations = Follow.objects.filter(follower_profile = self)
+
+        follow = [relation.profile for relation in follow_relations]
+
+        return follow
+    
+    def get_num_following(self):
+        '''Return the count of follows'''
+
+        return Follow.objects.filter(follower_profile = self).count()
+    
 class Post(models.Model):
     '''Encapsulates the data of a mini insta post by a user'''
 
@@ -74,3 +104,15 @@ class Photo(models.Model):
             return self.image_url
         
         return 'https://i.postimg.cc/9Q2RqNVW/no-img-avail.jpg'
+
+class Follow(models.Model):
+    '''Encapsulates the data of a follow'''
+
+    # define the data attributes of a follow object
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="profile")
+    follower_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="follower_profile")
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+
+        return f"{self.follower_profile.username} follows {self.profile.username}"
