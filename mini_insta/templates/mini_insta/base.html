@@ -28,10 +28,13 @@
 
         <footer>
             <nav>
+                <!-- This link is always available -->
                 <a href="{% url 'show_all_profiles' %}">View All Profiles</a>
-                <!-- if statement to check if a 'profile' object was passed to this template from the view -->
-                <!-- only renders on pages which this is true -->
+
+                <!-- These links will only be displayed on views that pass a single 'profile' object -->
                 {% if profile %}
+                    <a href="{% url 'show_feed' profile.pk %}" title="Home Feed"><i class="fas fa-home"></i> Feed</a>
+                    <a href="#" title="Search"><i class="fas fa-search"></i> Search</a>
                     <a href="{% url 'create_post_form' profile.pk %}">Create New Post</a>
                 {% endif %}
             </nav>
