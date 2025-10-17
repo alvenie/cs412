@@ -175,6 +175,18 @@ class PostFeedListView(ListView):
     template_name = 'mini_insta/show_feed.html'
     context_object_name = 'posts'
 
+    def get_queryset(self):
+        """
+        This method is overridden to return a custom queryset.
+        It fetches the feed for the specific profile from the URL.
+        """
+        
+        # Get the profile object based on the pk from the URL
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        
+        # Call the get_post_feed() method on that profile object
+        return profile.get_post_feed()
+
     def get_context_data(self, **kwargs):
         """Pass the profile object to the template for navigation."""
         context = super().get_context_data(**kwargs)

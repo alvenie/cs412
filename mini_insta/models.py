@@ -59,13 +59,13 @@ class Profile(models.Model):
     def get_post_feed(self):
         """Return the list of posts for the feed from profiles the user follows."""
         
-        # Get the list of profiles that the current user is following.
-        following_profiles = self.get_following()
+        # Get the primary keys of the profiles that 'self' is following.
+        following_pks = Follow.objects.filter(follower_profile=self).values_list('profile__pk', flat=True)
         
-        # Filter the Post model to get all posts where the author's profile is in the list of profiles we're following. Order by the most recent.
-        post_feed = Post.objects.filter(profile__in=following_profiles).order_by('-timestamp')
+        # Filter for posts where the author's pk is in the list of followed pks
+        feed_posts = Post.objects.filter(profile__pk__in=following_pks).exclude(profile=self).order_by('-timestamp')
         
-        return post_feed
+        return feed_posts
     
 class Post(models.Model):
     '''Encapsulates the data of a mini insta post by a user'''
