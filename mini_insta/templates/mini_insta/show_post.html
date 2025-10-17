@@ -46,13 +46,33 @@
                 {{ post.caption }} <br> {{ post.timestamp }}
             </h2>
             <hr>
-            
+
+            {% with likes=post.get_likes %}
+                {% if likes %}
+                    <p>
+                        Liked by 
+                        <strong>
+                            <a href="{% url 'show_profile' likes.first.profile.pk %}" class="display-a">
+                                @{{ likes.first.profile.display_name }}
+                            </a>
+                        </strong>
+                        {% with other_likes=likes.count|add:"-1" %}
+                            {% if other_likes > 0 %}
+                                and <strong>{{ other_likes }} other{{ other_likes|pluralize }}</strong>
+                            {% endif %}
+                        {% endwith %}
+                    </p>
+                {% endif %}
+            {% endwith %}
+
             {% for comment in post.get_all_comments %}
 
-                <div>
-                    
-                    <a href="{% url 'show_profile' post.profile.pk %}" class="display-a"><strong>@{{comment.profile.display_name}}:</strong></a><p>{{comment.text}}</p>
-
+                <div> 
+                    <p>
+                        <a href="{% url 'show_profile' comment.profile.pk %}" class="display-a">
+                            <strong>@{{comment.profile.display_name}}:</strong>
+                        </a>{{comment.text}}
+                    </p>
                 </div>
 
             {% endfor %}

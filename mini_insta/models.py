@@ -78,6 +78,12 @@ class Post(models.Model):
 
         comments = Comment.objects.filter(post = self).order_by('timestamp')
         return comments
+    
+    def get_likes(self):
+        '''Returns all likes on a post'''
+
+        likes = Like.objects.filter(post = self).order_by('timestamp')
+        return likes
 
 class Photo(models.Model):
     '''Encapsulates the data of a mini insta photo associated with a post'''
@@ -135,3 +141,15 @@ class Comment(models.Model):
     def __str__(self):
 
         return f"{self.profile} commented on {self.post}"
+
+class Like(models.Model):
+    '''Encapsulates the data of a like'''
+
+    # define the data attributes of a comment object
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+
+        return f"{self.profile} liked {self.post}"
