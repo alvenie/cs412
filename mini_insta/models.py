@@ -72,6 +72,12 @@ class Post(models.Model):
 
         photos = self.photo_set.all()
         return photos
+    
+    def get_all_comments(self):
+        '''Returns a QuerySet of comments associated with this post'''
+
+        comments = Comment.objects.filter(post = self).order_by('timestamp')
+        return comments
 
 class Photo(models.Model):
     '''Encapsulates the data of a mini insta photo associated with a post'''
@@ -116,3 +122,16 @@ class Follow(models.Model):
     def __str__(self):
 
         return f"{self.follower_profile.username} follows {self.profile.username}"
+    
+class Comment(models.Model):
+    '''Encapsulates the data of a comment'''
+
+    # define the data attributes of a comment object
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+    text = models.TextField(blank=True)
+
+    def __str__(self):
+
+        return f"{self.profile} commented on {self.post}"

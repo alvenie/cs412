@@ -41,9 +41,22 @@
             {% endfor %}
         </div>
 
-        <p class="caption-p">
-            {{ post.caption }} <br> {{ post.timestamp }}
-        </p>
+        <div>
+            <h2 class="caption-p">
+                {{ post.caption }} <br> {{ post.timestamp }}
+            </h2>
+            <hr>
+            
+            {% for comment in post.get_all_comments %}
+
+                <div>
+                    
+                    <a href="{% url 'show_profile' post.profile.pk %}" class="display-a"><strong>@{{comment.profile.display_name}}:</strong></a><p>{{comment.text}}</p>
+
+                </div>
+
+            {% endfor %}
+        </div>
 
     </div>
 
