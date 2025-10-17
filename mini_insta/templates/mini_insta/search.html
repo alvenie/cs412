@@ -1,0 +1,27 @@
+<!-- mini_insta/search.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 10/17/2025 -->
+<!-- Search form template for mini_insta app -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+<div class="profile-detail">
+    <h1>Search</h1>
+    <p>Find profiles and posts.</p>
+    <hr>
+</div>
+
+<main class="feed-container">
+    <div class="search-form-container">
+        <form method="GET" action="{% url 'search' profile.pk %}">
+            <input type="text" name="query" placeholder="Search..." class="search-input">
+            <button type="submit" class="btn">Search</button>
+        </form>
+    </div>
+</main>
+
+{% endblock %}
+    
