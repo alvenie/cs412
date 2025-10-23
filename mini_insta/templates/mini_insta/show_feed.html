@@ -1,0 +1,79 @@
+<!-- mini_insta/show_feed.html -->
+ <!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 10/17/2025 -->
+<!-- Show feed template for mini_insta app -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+<div class="profile-detail">
+    <h1>Post Feed</h1>
+    <p>Posts from people you follow. <a href="{% url 'show_profile' profile.pk %}" class="update-a">View Your Profile</a></p>
+    <hr>
+</div>
+
+<main class="feed-container">
+    {% for post in posts %}
+        <div class="post-card">
+            <!-- Post Header -->
+            <div class="post-header">
+                <a href="{% url 'show_profile' post.profile.pk %}">
+                    <img src="{{ post.profile.profile_image_url }}" alt="avatar" class="post-avatar">
+                </a>
+                <a href="{% url 'show_profile' post.profile.pk %}" class="display-a">
+                    <strong>@{{ post.profile.display_name }}</strong>
+                </a>
+            </div>
+
+            <!-- Post Image -->
+            <a href="{% url 'show_post' post.pk %}">
+            {% with first_photo=post.get_all_photos.first %}
+                {% if first_photo %}
+                    <img src="{{ first_photo.get_image_url }}" alt="Image for post" class="feed-post-img">
+                {% else %}
+                    <img src="https://i.postimg.cc/9Q2RqNVW/no-img-avail.jpg" alt="No image available" class="feed-post-img">
+                {% endif %}
+            {% endwith %}
+            </a>
+
+            <!-- Post Content (Likes, Caption, Comments) -->
+            <div class="post-content">
+                {% with likes=post.get_likes %}
+                    {% if likes %}
+                        <p class="likes-section">
+                            Liked by 
+                            <strong>
+                                <a href="{% url 'show_profile' likes.first.profile.pk %}" class="display-a">
+                                    @{{ likes.first.profile.display_name }}
+                                </a>
+                            </strong>
+                            {% with other_likes=likes.count|add:"-1" %}
+                                {% if other_likes > 0 %}
+                                    and {{ other_likes }} other{{ other_likes|pluralize }}
+                                {% endif %}
+                            {% endwith %}
+                        </p>
+                    {% endif %}
+                {% endwith %}
+
+                <p class="caption-p">
+                    <strong><a href="{% url 'show_profile' post.profile.pk %}" class="display-a">@{{ post.profile.display_name }}</a>:</strong> {{ post.caption }}
+                </p>
+
+                <div class="comments-preview">
+                    {% for comment in post.get_all_comments %}
+                        <p><a href="{% url 'show_profile' comment.profile.pk %}" class="display-a"><strong>@{{comment.profile.display_name}}:</strong></a> {{comment.text}}</p>
+                    {% endfor %}
+                </div>
+                 <a href="{% url 'show_post' post.pk %}" class="view-comments-link">View all comments...</a>
+                 <small class="post-timestamp">{{ post.timestamp }}</small>
+            </div>
+        </div>
+    {% empty %}
+        <p class="no-followers-message">Your feed is empty. Follow some profiles to see their posts here!</p>
+    {% endfor %}
+</main>
+
+{% endblock %}

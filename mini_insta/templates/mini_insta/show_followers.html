@@ -8,19 +8,24 @@
 
 {% block content %}
 
-<h2>Followers of @{{ profile.display_name }}</h2>
+<div class="profile-detail">
+    <h1>Followers of <a href="{% url 'show_profile' profile.pk %}" class="follow-a">@{{ profile.display_name }}</a></h1>
     <hr>
-    <div>
-        {% for follower in profile.get_followers %}
-            <div>
-                <a href="{% url 'show_profile' follower.pk %}">
-                    <img src="{{ follower.profile_image_url }}" alt="Avatar for {{ follower.display_name }}">
-                    <span>@{{ follower.display_name }}</span>
-                </a>
-            </div>
-        {% empty %}
-            <p>This profile has no followers yet.</p>
-        {% endfor %}
+</div>
+
+<div class="follower-grid">
+    {% for follower in profile.get_followers %}
+        <div class="post-div">
+            <a href="{% url 'show_profile' follower.pk %}">
+                <img src="{{ follower.profile_image_url }}" alt="Avatar for {{ follower.display_name }}" class="follower-grid-avatar">
+            </a>
+            <a href="{% url 'show_profile' follower.pk %}" class="follow-a">
+                <span>@{{ follower.display_name }}</span>
+            </a>
+        </div>
+    {% empty %}
+        <p class="no-followers-message">This profile has no followers yet.</p>
+    {% endfor %}
     </div>
 
 {% endblock %}
