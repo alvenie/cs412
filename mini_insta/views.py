@@ -12,6 +12,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
+class LoginRequiredMixin(LoginRequiredMixin):
+    """
+    A mixin that provides a `get_profile` method to return 
+    the Profile of the currently logged-in user.
+    """
+
+    def get_profile(self):
+        """Returns the profile of the logged-in user."""
+
+        return Profile.objects.get(user=self.request.user)
+    
 class ProfileListView(ListView):
     '''Define a view class to show all mini insta Profiles.'''
 
@@ -52,7 +63,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
 
         # Get the Profile object using the pk from the URL
-        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        profile = self.get_profile()
 
         # Add the profile to the context dictionary
         context['profile'] = profile
@@ -80,8 +91,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         #    )
         
         # Assign the profile to the new post object before saving the form.
-        # The profile's pk is retrieved from the URL.
-        form.instance.profile = Profile.objects.get(pk=self.kwargs['pk'])
+        form.instance.profile = self.get_profile()
 
         # Let the parent CreateView's form_valid method save the Post.
         # This sets self.object to the newly created post instance.
@@ -113,7 +123,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         '''Define where to redirect after a successful form submission.'''
         
         # Get the primary key of the profile being updated
-        pk = self.kwargs['pk']
+        pk = self.get_profile()
         
         # Reverse the URL pattern for the profile detail page
         return reverse('show_profile', kwargs={'pk': pk})
@@ -180,8 +190,8 @@ class PostFeedListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         """This method is overridden to return a custom queryset. It fetches the feed for the specific profile from the URL."""
 
-        # Get the profile object based on the pk from the URL
-        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        # Get the profile object based on the logged in User
+        profile = self.get_profile()
         
         # Call the get_post_feed() method on that profile object
         return profile.get_post_feed()
@@ -190,7 +200,7 @@ class PostFeedListView(LoginRequiredMixin, ListView):
         """Pass the profile object to the template for navigation."""
 
         context = super().get_context_data(**kwargs)
-        context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])
+        context['profile'] = self.get_profile()
         return context
 
 class SearchView(LoginRequiredMixin, ListView):
@@ -204,7 +214,7 @@ class SearchView(LoginRequiredMixin, ListView):
 
         if 'query' not in self.request.GET:
             # If no query, render the search form page.
-            profile = Profile.objects.get(pk=self.kwargs['pk'])
+            profile = self.get_profile()
             return render(request, 'mini_insta/search.html', {'profile': profile})
         
         # If a query is present, proceed with the default ListView behavior.
@@ -237,6 +247,6 @@ class SearchView(LoginRequiredMixin, ListView):
             )
 
         # Add the profile object for whom the search is being performed
-        context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])
+        context['profile'] = self.get_profile()
         
         return context

@@ -21,7 +21,7 @@
             <p>{{ profile.username }}</p>
             {% if request.user.is_authenticated %}
                 {% if user == profile.user %}
-                    <a href="{% url 'update_profile' profile.pk %}" class="update-a">Edit Profile</a>
+                    <a href="{% url 'update_profile' %}" class="update-a">Edit Profile</a>
                 {% endif %}
             {% endif %}
         </div>
