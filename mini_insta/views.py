@@ -8,6 +8,7 @@ from .models import Profile, Post, Photo, Follow
 from .forms import CreatePostForm, UpdateProfileForm
 from django.urls import reverse
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -32,7 +33,7 @@ class PostDetailView(DetailView):
     template_name = 'mini_insta/show_post.html'
     context_object_name = 'post'
 
-class CreatePostView(CreateView):
+class CreatePostView(LoginRequiredMixin, CreateView):
     '''A view to handle creation of a post on a profile'''
 
     form_class = CreatePostForm
@@ -96,7 +97,7 @@ class CreatePostView(CreateView):
         # Return the HttpResponseRedirect object.
         return response
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
     '''A view to handle updating a user's profile.'''
 
     # The form to use for this view
@@ -117,7 +118,7 @@ class UpdateProfileView(UpdateView):
         # Reverse the URL pattern for the profile detail page
         return reverse('show_profile', kwargs={'pk': pk})
     
-class DeletePostView(DeleteView):
+class DeletePostView(LoginRequiredMixin, DeleteView):
     """A view to handle deleting a post."""
     
     # The model this view will operate on
@@ -140,7 +141,7 @@ class DeletePostView(DeleteView):
         profile_pk = self.object.profile.pk
         return reverse('show_profile', kwargs={'pk': profile_pk})
     
-class UpdatePostView(UpdateView):
+class UpdatePostView(LoginRequiredMixin, UpdateView):
     """A view to handle updating a post."""
     
     # The model this view will operate on
@@ -170,7 +171,7 @@ class ShowFollowingDetailView(DetailView):
     template_name = 'mini_insta/show_following.html'
     context_object_name = 'profile'
 
-class PostFeedListView(ListView):
+class PostFeedListView(LoginRequiredMixin, ListView):
     '''Define a view class to show the post feed for a Profile.'''
     model = Post
     template_name = 'mini_insta/show_feed.html'
@@ -192,7 +193,7 @@ class PostFeedListView(ListView):
         context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])
         return context
 
-class SearchView(ListView):
+class SearchView(LoginRequiredMixin, ListView):
     """A view to handle searching for Profiles and Posts."""
 
     template_name = 'mini_insta/search_results.html'

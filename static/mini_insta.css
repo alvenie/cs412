@@ -226,6 +226,15 @@ main {
     background-color: #5a6268;
 }
 
+.btn-logout, .btn-login {
+    margin: 0px;
+    padding: 4px 15px;
+}
+
+footer nav form {
+    margin: 0;
+}
+
 .form-actions{
     display: flex;
     justify-content: center;

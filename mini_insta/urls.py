@@ -7,6 +7,9 @@ from django.urls import path
 from .views import * 
 # ProfileListView, ProfileDetailView, PostDetailView, UpdateProfileView, DeletePostView, UpdatePostView, ShowFollowersDetailView, ShowFollowingDetailView
 
+# generic view for authentication/authorization
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
     path('', ProfileListView.as_view(), name='show_all_profiles'),
     path('profile/<int:pk>/', ProfileDetailView.as_view(), name='show_profile'),
@@ -18,5 +21,10 @@ urlpatterns = [
     path('profile/<int:pk>/followers', ShowFollowersDetailView.as_view(), name='show_followers'),
     path('profile/<int:pk>/following', ShowFollowingDetailView.as_view(), name='show_following'),
     path('profile/<int:pk>/feed', PostFeedListView.as_view(), name='show_feed'),
-    path('profile/<int:pk>/search', SearchView.as_view(), name='search')
+    path('profile/<int:pk>/search', SearchView.as_view(), name='search'),
+
+    ## authorization related urls
+    path('login/', auth_views.LoginView.as_view(template_name='mini_insta/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='show_all_profiles'), name='logout'),
+    # path('register/', UserRegistrationView.as_view(), name='register'),
 ]

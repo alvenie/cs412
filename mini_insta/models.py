@@ -3,6 +3,7 @@
 # description: The models.py file specific to the mini insta app
 
 from django.db import models
+from django.contrib.auth.models import User # for authentication 
 
 # Create your models here.
 
@@ -15,6 +16,7 @@ class Profile(models.Model):
     profile_image_url = models.URLField(blank=True)
     bio_text = models.TextField(blank=True)
     join_date = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.display_name}'

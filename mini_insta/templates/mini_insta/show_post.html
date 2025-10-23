@@ -17,12 +17,16 @@
                 <h2>@{{ post.profile.display_name }}</h2>
             </a>
             <p>{{ post.profile.username }}</p>
-            <div>
-                <a href="{% url 'update_post' post.pk %}" class="update-a">Update Post</a>
-            </div>
-            <div>
-                <a href="{% url 'delete_post' post.pk %}" class="update-a">Delete Post</a>       
-            </div>
+            {% if request.user.is_authenticated %}
+                {% if user == post.profile.user %}
+                    <div>
+                        <a href="{% url 'update_post' post.pk %}" class="update-a">Update Post</a>
+                    </div>
+                    <div>
+                        <a href="{% url 'delete_post' post.pk %}" class="update-a">Delete Post</a>       
+                    </div>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 

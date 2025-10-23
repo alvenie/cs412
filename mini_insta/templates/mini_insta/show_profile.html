@@ -19,7 +19,11 @@
         <div class="profile-meta">
             <h2>@{{ profile.display_name }}</h2>
             <p>{{ profile.username }}</p>
-            <a href="{% url 'update_profile' profile.pk %}" class="update-a">Edit Profile</a>
+            {% if request.user.is_authenticated %}
+                {% if user == profile.user %}
+                    <a href="{% url 'update_profile' profile.pk %}" class="update-a">Edit Profile</a>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 

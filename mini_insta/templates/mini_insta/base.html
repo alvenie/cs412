@@ -22,6 +22,12 @@
 
         </div>
 
+        {% if request.user.is_authenticated %}
+            Logged in as: {{ request.user }}
+        {% else %}
+            Not logged in.
+        {% endif %}
+
         <!-- substitute in the specific content here -->
         {% block content %}
         {% endblock %}
@@ -30,14 +36,26 @@
             <nav>
                 <!-- This link is always available -->
                 <a href="{% url 'show_all_profiles' %}">View All Profiles</a>
-
+                
                 <!-- These links will only be displayed on views that pass a single 'profile' object -->
-                {% if profile %}
-                    <a href="{% url 'show_feed' profile.pk %}" title="Home Feed"><i class="fas fa-home"></i> Feed</a>
-                    <a href="{% url 'search' profile.pk %}" title="Search"><i class="fas fa-search"></i> Search</a>
-                    <a href="{% url 'create_post_form' profile.pk %}">Create New Post</a>
+                {% if request.user.is_authenticated %}
+                    {% if profile and user == profile.user %}
+                        <a href="{% url 'show_feed' profile.pk %}" title="Home Feed"><i class="fas fa-home"></i> Feed</a>
+                        <a href="{% url 'search' profile.pk %}" title="Search"><i class="fas fa-search"></i> Search</a>
+                        <a href="{% url 'create_post_form' profile.pk %}">Create New Post</a>
+                    {% endif %}
+                    <form action="{% url 'logout' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Logout" class="btn btn-logout">
+                    </form>
+                {% else %}
+                    <form action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Login" class="btn btn-login">
+                    </form>
                 {% endif %}
             </nav>
+
         </footer>
     </body>
 </html>
