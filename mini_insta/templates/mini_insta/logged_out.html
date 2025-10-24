@@ -1,0 +1,26 @@
+<!-- templates/blog/logged_out.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 10/24/2025 -->
+<!-- logged out template for mini_insta app -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+
+    <div class="profile-detail">
+        <h1>You have been logged out.</h1>
+        <hr>
+    </div>
+
+    <div class="post-div">
+
+        <h2>Thank you for visiting Mini Insta!</h2>
+        <br>
+        
+        <form action="{% url 'login' %}">
+            <input type="submit" value="Login  Again" class="btn btn-login">
+        </form>
+    </div>
+
+{% endblock %}

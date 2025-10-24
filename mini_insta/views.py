@@ -3,10 +3,10 @@
 # description: The views.py file specific to the mini insta app
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from .models import Profile, Post, Photo, Follow
 from .forms import CreatePostForm, UpdateProfileForm
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -22,6 +22,10 @@ class LoginRequiredMixin(LoginRequiredMixin):
         """Returns the profile of the logged-in user."""
 
         return Profile.objects.get(user=self.request.user)
+    
+    def get_login_url(self):
+        """ Override the default login URL to point to our app's 'login' page. """
+        return reverse_lazy('login')
     
 class ProfileListView(ListView):
     '''Define a view class to show all mini insta Profiles.'''
@@ -123,10 +127,15 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         '''Define where to redirect after a successful form submission.'''
         
         # Get the primary key of the profile being updated
-        pk = self.get_profile()
+        pk = self.object.pk
         
         # Reverse the URL pattern for the profile detail page
         return reverse('show_profile', kwargs={'pk': pk})
+    
+    def get_object(self):
+        """Return the Profile object for the currently logged-in user."""
+        
+        return self.get_profile()
     
 class DeletePostView(LoginRequiredMixin, DeleteView):
     """A view to handle deleting a post."""
@@ -250,3 +259,8 @@ class SearchView(LoginRequiredMixin, ListView):
         context['profile'] = self.get_profile()
         
         return context
+    
+class LogoutConfirmationView(TemplateView):
+    '''A simple view to show the 'logged out' confirmation page.'''
+
+    template_name = 'mini_insta/logged_out.html'
