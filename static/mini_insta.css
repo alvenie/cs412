@@ -198,6 +198,12 @@ main {
     color: black;
 }
 
+.register-a {
+    display: inline-block;
+    text-decoration: none;
+    color: purple
+}
+
 /* Basic styling for all buttons and links styled as buttons */
 .btn {
     display: inline-block;
@@ -370,4 +376,79 @@ footer nav form {
     color: #8e8e8e;
     font-size: 12px;
     text-transform: uppercase;
+}
+
+/* --- Form Layout Styling --- */
+
+/* Style the tables holding the forms */
+.post-div table {
+    width: 100%;
+    max-width: 600px; /* Increased max-width a bit */
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+/* Style the form labels (table headers) */
+.post-div th {
+    text-align: right;
+    padding: 10px;
+    padding-right: 20px;
+    width: 30%; /* Set a width for the label column */
+    font-family: "Georgia", serif;
+    font-weight: bold;
+    vertical-align: top;
+    padding-top: 12px; /* Align label text with input box */
+}
+
+/* Style the form fields (table data) */
+.post-div td {
+    text-align: left;
+    padding: 8px 0;
+}
+
+/* Style the actual input boxes, textareas, etc. */
+.post-div input[type="text"],
+.post-div input[type="password"],
+.post-div input[type="url"],
+.post-div textarea {
+    width: 100%;
+    max-width: 350px;
+    padding: 8px;
+    font-size: 1rem;
+    font-family: "Garamond", serif;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+
+.post-div textarea {
+    min-height: 120px;
+}
+
+/* Style the help text (e.g., password instructions) */
+.post-div .helptext,
+.post-div .helptext ul {
+    display: block; 
+    margin-top: 5px; 
+    margin-left: 0;
+    padding-left: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Make password bullet points look clean */
+.post-div .helptext li {
+    list-style-type: disc;
+    list-style-position: inside;
+    margin-bottom: 4px;
+}
+
+/* Style error messages */
+.post-div .errorlist {
+    color: #D8000C; /* Red */
+    font-weight: bold;
+    list-style-type: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+    font-size: 0.9rem;
 }

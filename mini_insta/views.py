@@ -5,10 +5,12 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from .models import Profile, Post, Photo, Follow
-from .forms import CreatePostForm, UpdateProfileForm
+from .forms import CreatePostForm, UpdateProfileForm, CreateProfileForm
 from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 # Create your views here.
 
@@ -264,3 +266,60 @@ class LogoutConfirmationView(TemplateView):
     '''A simple view to show the 'logged out' confirmation page.'''
 
     template_name = 'mini_insta/logged_out.html'
+
+class CreateProfileView(CreateView):
+    '''
+    A view to handle creating a new User and Profile at the same time.
+    '''
+    form_class = CreateProfileForm
+    model = Profile
+    template_name = 'mini_insta/create_profile_form.html'
+
+    def get_context_data(self, **kwargs):
+        """
+        Override to add the UserCreationForm to the context.
+        """
+        # Call superclass
+        context = super().get_context_data(**kwargs)
+        
+        # Add the UserCreationForm to the context
+        if 'user_form' not in kwargs:
+            if self.request.method == 'POST':
+                # If form is invalid, repopulate UserCreationForm from POST data
+                context['user_form'] = UserCreationForm(self.request.POST)
+            else:
+                # On a GET request, show a blank form
+                context['user_form'] = UserCreationForm()
+        return context
+
+    def form_valid(self, form):
+        """
+        Override to handle the UserCreationForm and log the new user in.
+        'form' is an instance of CreateProfileForm.
+        """
+        # Reconstruct the UserCreationForm from the POST data
+        user_form = UserCreationForm(self.request.POST)
+
+        if user_form.is_valid():
+            # Save the UserCreationForm. This creates the User.
+            user = user_form.save()
+
+            # Log the new user in
+            login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
+
+            # Attach the new User to the Profile form's instance
+            form.instance.user = user
+
+            # Manually copy the username from the User form to the Profile form
+            form.instance.username = user_form.cleaned_data['username']
+            
+            # Delegate to the superclass' form_valid this saves the Profile (form.instance) and redirects
+            return super().form_valid(form)
+        else:
+            # The UserCreationForm was invalid. Re-render the page with both forms, displaying the errors.
+            return self.render_to_response(self.get_context_data(form=form, user_form=user_form))
+
+    def get_success_url(self):
+        """Redirect to the new profile's detail page after creation."""
+        # self.object is the new Profile instance set by super().form_valid()
+        return reverse('show_profile', kwargs={'pk': self.object.pk})

@@ -1,0 +1,40 @@
+<!-- templates/blog/create_profile_form.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 10/24/2025 -->
+<!-- create profile template for mini_insta app -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+    <div class="profile-detail">
+        <h1>Create Your Account</h1>
+        <p>Create your user account and profile all in one step.</p>
+        <hr>
+    </div>
+
+    <div class="post-div">
+        <form action="{% url 'create_profile' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <h2>Account Details</h2>
+            <p>This will be used for logging in.</p>
+            <table>
+                {{ user_form.as_table }}
+            </table>
+
+            <hr>
+            
+            <h2>Profile Details</h2>
+            <p>This is what other users will see.</p>
+            <table>
+                {{ form.as_table }} 
+            </table>
+
+            <div class="form-actions" style="margin-top: 20px;">
+                <button type="submit" class="btn">Register</button>
+                <a href="{% url 'show_all_profiles' %}" class="btn btn-cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

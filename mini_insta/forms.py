@@ -25,3 +25,12 @@ class UpdateProfileForm(forms.ModelForm):
         model = Profile
         fields = ['username', 'profile_image_url', 'bio_text']
 
+class CreateProfileForm(forms.ModelForm):
+    '''A form to create a profile'''
+
+    profile_image_url = forms.URLField(required=False, label="Profile Image URL")
+
+    class Meta:
+        '''Associate this form with a model from our database'''
+        model = Profile
+        fields = ['display_name', 'profile_image_url', 'bio_text']
