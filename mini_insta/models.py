@@ -16,7 +16,7 @@ class Profile(models.Model):
     profile_image_url = models.URLField(blank=True)
     bio_text = models.TextField(blank=True)
     join_date = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
 
     def __str__(self):
         return f'{self.display_name}'
@@ -69,6 +69,20 @@ class Profile(models.Model):
         
         return feed_posts
     
+    def is_followed_by(self, user):
+        """Checks if this profile is followed by the given user's profile."""
+
+        if not user.is_authenticated:
+            return False
+        try:
+            # Now user.profile works because of OneToOneField + related_name='profile'
+            follower_profile = user.profile
+            # Check if a Follow object exists where self is the profile being followed
+            return Follow.objects.filter(profile=self, follower_profile=follower_profile).exists()
+
+        except Profile.DoesNotExist: # Handle case where user might not have a profile yet
+             return False
+    
 class Post(models.Model):
     '''Encapsulates the data of a mini insta post by a user'''
 
@@ -97,6 +111,19 @@ class Post(models.Model):
 
         likes = Like.objects.filter(post = self).order_by('timestamp')
         return likes
+    
+    def is_liked_by(self, user):
+        
+        """Checks if this post is liked by the given user's profile."""
+        if not user.is_authenticated:
+            return False
+        try:
+            # Now user.profile works
+            liker_profile = user.profile
+            # Check if a Like object exists linking this post and the liker's profile
+            return Like.objects.filter(post=self, profile=liker_profile).exists()
+        except Profile.DoesNotExist:
+            return False
 
 class Photo(models.Model):
     '''Encapsulates the data of a mini insta photo associated with a post'''
@@ -134,9 +161,13 @@ class Follow(models.Model):
     '''Encapsulates the data of a follow'''
 
     # define the data attributes of a follow object
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="profile")
-    follower_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="follower_profile")
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="followers")
+    follower_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="following")
     timestamp = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        # Ensures a profile cannot follow the same profile more than once
+        unique_together = ('profile', 'follower_profile')
 
     def __str__(self):
 
@@ -162,6 +193,10 @@ class Like(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        # Ensures a profile cannot like the same post more than once
+        unique_together = ('post', 'profile')
 
     def __str__(self):
 

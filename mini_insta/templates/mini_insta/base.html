@@ -22,12 +22,13 @@
 
         </div>
 
-        {% if request.user.is_authenticated %}
-            Logged in as: {{ request.user }}
-        {% else %}
-            Not logged in.
-        {% endif %}
-
+        <div class="post-div">
+            {% if request.user.is_authenticated %}
+                FOR TESTING ONLY - Logged in as: {{ request.user }}
+            {% else %}
+                Not logged in.
+            {% endif %}
+        </div>
         <!-- substitute in the specific content here -->
         {% block content %}
         {% endblock %}

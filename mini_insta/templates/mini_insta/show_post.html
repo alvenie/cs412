@@ -28,6 +28,25 @@
                 {% endif %}
             {% endif %}
         </div>
+            {% if request.user.is_authenticated %}
+                {# Don't show like button for own post #}
+                {% if request.user.profile != post.profile %}
+                    {# --- Check the boolean from the view context --- #}
+                    {% if is_liked %}
+                        {# Already liked, show Unlike button #}
+                        <form action="{% url 'unlike' post.pk %}" method="POST" class="like-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-cancel btn-small">Unlike Post</button>
+                        </form>
+                    {% else %}
+                        {# Not liked, show Like button #}
+                        <form action="{% url 'like' post.pk %}" method="POST" class="like-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-small">Like Post</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
     </div>
 
     <!-- for loop to access all the photos associated with the post -->

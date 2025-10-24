@@ -225,6 +225,13 @@ main {
     background-color: #0056b3;
 }
 
+.btn.btn-cancel {
+    background-color: #6c757d;
+}
+.btn.btn-cancel:hover {
+    background-color: #5a6268;
+}
+
 .btn-cancel {
     background-color: #6c757d;
 }
@@ -235,6 +242,25 @@ main {
 .btn-logout, .btn-login {
     margin: 0px;
     padding: 4px 15px;
+}
+
+.btn-small {
+    padding: 6px 12px; /* Reduced padding */
+    font-size: 14px;  /* Slightly smaller font */
+    margin: 2px;      /* Smaller margin */
+}
+
+.btn-small.btn-cancel {
+     background-color: #6c757d; /* Keep cancel color */
+}
+.btn-small.btn-cancel:hover {
+     background-color: #5a6268;
+}
+.btn-small:not(.btn-cancel) { /* Target Like/Follow (blue) */
+     background-color: #007bff;
+}
+.btn-small:not(.btn-cancel):hover {
+    background-color: #0056b3;
 }
 
 footer nav form {
@@ -425,7 +451,7 @@ footer nav form {
     min-height: 120px;
 }
 
-/* Style the help text (e.g., password instructions) */
+/* Style the help text */
 .post-div .helptext,
 .post-div .helptext ul {
     display: block; 
@@ -436,7 +462,6 @@ footer nav form {
     color: #666;
 }
 
-/* Make password bullet points look clean */
 .post-div .helptext li {
     list-style-type: disc;
     list-style-position: inside;
@@ -451,4 +476,9 @@ footer nav form {
     padding: 0;
     margin: 5px 0 0 0;
     font-size: 0.9rem;
+}
+
+.action-form {
+    margin: 0px;
+    padding: 0px;
 }

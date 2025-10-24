@@ -4,13 +4,17 @@
 
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
-from .models import Profile, Post, Photo, Follow
+from .models import Profile, Post, Photo, Follow, Like
 from .forms import CreatePostForm, UpdateProfileForm, CreateProfileForm
 from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm  
 from django.contrib.auth import login
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect
+from django.views.decorators.http import require_POST
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 
@@ -43,12 +47,50 @@ class ProfileDetailView(DetailView):
     template_name = 'mini_insta/show_profile.html'
     context_object_name = 'profile'
 
+    def get_context_data(self, **kwargs):
+        """Add 'is_following' boolean to context."""
+        context = super().get_context_data(**kwargs)
+        profile_to_view = self.get_object() # Get the profile being viewed
+        is_following = False # Default to False
+
+        # Check only if a user is logged in
+        if self.request.user.is_authenticated:
+            try:
+                # Call the model method to check the relationship
+                is_following = profile_to_view.is_followed_by(self.request.user)
+            except Profile.DoesNotExist:
+                 # Handle case where request.user might not have a profile yet
+                 # (shouldn't happen if profile creation on signup is robust)
+                 is_following = False
+
+        context['is_following'] = is_following
+        return context
+
+
 class PostDetailView(DetailView):
     '''Define a view class to show a specific Post'''
 
     model = Post
     template_name = 'mini_insta/show_post.html'
     context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        """Add 'is_liked' boolean to context."""
+        context = super().get_context_data(**kwargs)
+        post_to_view = self.get_object() # Get the post being viewed
+        is_liked = False # Default to False
+
+        # Check only if a user is logged in
+        if self.request.user.is_authenticated:
+            try:
+                # Call the model method to check the relationship
+                is_liked = post_to_view.is_liked_by(self.request.user)
+            except Profile.DoesNotExist:
+                 # Handle case where request.user might not have a profile yet
+                 is_liked = False
+
+        context['is_liked'] = is_liked
+        return context
 
 class CreatePostView(LoginRequiredMixin, CreateView):
     '''A view to handle creation of a post on a profile'''
@@ -323,3 +365,67 @@ class CreateProfileView(CreateView):
         """Redirect to the new profile's detail page after creation."""
         # self.object is the new Profile instance set by super().form_valid()
         return reverse('show_profile', kwargs={'pk': self.object.pk})
+
+class AddFollowView(LoginRequiredMixin, TemplateView):
+    """ Creates a Follow relationship """
+    http_method_names = ['post'] # Allow only POST
+
+    # Decorate dispatch to ensure it's a POST request
+    @method_decorator(require_POST)
+    def dispatch(self, request, *args, **kwargs):
+        profile_to_follow = get_object_or_404(Profile, pk=self.kwargs['pk'])
+        follower_profile = self.get_profile()
+
+        if profile_to_follow == follower_profile:
+            return HttpResponseForbidden("You cannot follow yourself.")
+
+        Follow.objects.get_or_create(profile=profile_to_follow, follower_profile=follower_profile)
+
+        # Redirect back to the profile page being viewed
+        return redirect('show_profile', pk=self.kwargs['pk'])
+
+class DeleteFollowView(LoginRequiredMixin, TemplateView):
+    """ Deletes a Follow relationship """
+    http_method_names = ['post']
+
+    @method_decorator(require_POST)
+    def dispatch(self, request, *args, **kwargs):
+        profile_to_unfollow = get_object_or_404(Profile, pk=self.kwargs['pk'])
+        follower_profile = self.get_profile()
+
+        Follow.objects.filter(profile=profile_to_unfollow, follower_profile=follower_profile).delete()
+
+        # Redirect back to the profile page
+        return redirect('show_profile', pk=self.kwargs['pk'])
+
+class AddLikeView(LoginRequiredMixin, TemplateView):
+    """ Creates a Like relationship """
+    http_method_names = ['post']
+
+    @method_decorator(require_POST)
+    def dispatch(self, request, *args, **kwargs):
+        post = get_object_or_404(Post, pk=self.kwargs['pk'])
+        liker_profile = self.get_profile()
+
+        if post.profile == liker_profile:
+            return HttpResponseForbidden("You cannot like your own post.")
+
+        Like.objects.get_or_create(post=post, profile=liker_profile)
+
+        # Redirect back to the post detail page
+        return redirect('show_post', pk=self.kwargs['pk'])
+
+
+class DeleteLikeView(LoginRequiredMixin, TemplateView):
+    """ Deletes a Like relationship """
+    http_method_names = ['post']
+
+    @method_decorator(require_POST)
+    def dispatch(self, request, *args, **kwargs):
+        post = get_object_or_404(Post, pk=self.kwargs['pk'])
+        liker_profile = self.get_profile()
+
+        Like.objects.filter(post=post, profile=liker_profile).delete()
+
+        # Redirect back to the post detail page
+        return redirect('show_post', pk=self.kwargs['pk'])

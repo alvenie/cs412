@@ -23,6 +23,14 @@ urlpatterns = [
     path('profile/feed', PostFeedListView.as_view(), name='show_feed'),
     path('profile/search', SearchView.as_view(), name='search'),
 
+    ## Like/Unlike urls
+    path('post/<int:pk>/like/', AddLikeView.as_view(), name='like'),
+    path('post/<int:pk>/delete_like/', DeleteLikeView.as_view(), name='unlike'),
+
+    ## Follow/Unfollow urls
+    path('profile/<int:pk>/follow/', AddFollowView.as_view(), name='follow'),
+    path('profile/<int:pk>/delete_follow/', DeleteFollowView.as_view(), name='unfollow'),
+
     ## authorization related urls
     path('login/', auth_views.LoginView.as_view(template_name='mini_insta/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='logout_confirmation'), name='logout'),

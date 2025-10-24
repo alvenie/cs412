@@ -19,9 +19,27 @@
         <div class="profile-meta">
             <h2>@{{ profile.display_name }}</h2>
             <p>{{ profile.username }}</p>
+            <!-- Follow/Unfollow Button Logic -->
             {% if request.user.is_authenticated %}
-                {% if user == profile.user %}
-                    <a href="{% url 'update_profile' %}" class="update-a">Edit Profile</a>
+                {% if request.user.profile != profile %} {# Can't follow self #}
+                    {% if is_following %}
+                        {# Already following, show Unfollow button #}
+                            <form action="{% url 'unfollow' profile.pk %}" method="POST" class="action-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-cancel">Unfollow</button>
+                            </form>
+                    {% else %}
+
+                        {# Not following, show Follow button #}
+                        <form action="{% url 'follow' profile.pk %}" method="POST" class="action-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn">Follow</button>
+                        </form>
+                    {% endif %} 
+                {% else %}
+
+                     {# This is the logged-in user's own profile #}
+                     <a href="{% url 'update_profile' %}" class="update-a">Edit Profile</a>
                 {% endif %}
             {% endif %}
         </div>
