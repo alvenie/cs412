@@ -26,3 +26,7 @@ th {
 fieldset { 
     margin-bottom: 1em; 
 }
+.header-nav a {
+    margin-right: 15px;
+    color: #333;
+}

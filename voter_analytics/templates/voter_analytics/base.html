@@ -12,8 +12,9 @@
         <link rel="stylesheet" href="{% static 'voter_analytics.css' %}">
     </head>
     <body>
-        <nav>
+        <nav class="header-nav">
             <a href="{% url 'voter_analytics:voters' %}">Voter List</a>
+            <a href="{% url 'voter_analytics:graphs' %}">Graphs</a>
         </nav>
 
         <main>

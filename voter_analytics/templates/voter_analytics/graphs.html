@@ -1,0 +1,22 @@
+<!-- voter_analytic/graphs.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 10/31/2025 -->
+<!-- graphs template for voter_analytic app -->
+
+{% extends "voter_analytics/base.html" %}
+
+{% block content %}
+    <h1>Voter Data Graphs</h1>
+    
+    {% include "voter_analytics/_filter_form.html" %}
+
+    <hr>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    {{ graph1_div|safe }}
+    {{ graph2_div|safe }}
+    {{ graph3_div|safe }}
+
+{% endblock %}
