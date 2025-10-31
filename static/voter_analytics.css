@@ -1,0 +1,28 @@
+/* static/voter_analytics.css */
+
+body { 
+    font-family: sans-serif; 
+    margin: 2em; 
+}
+nav { 
+    background: #eee; 
+    padding: 1em; 
+    margin-bottom: 1em; 
+}
+table { 
+    border-collapse: collapse; 
+    width: 100%; 
+}
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 8px; 
+}
+th { 
+    background-color: #f4f4f4; 
+}
+.pagination { 
+    margin-top: 1em; 
+}
+fieldset { 
+    margin-bottom: 1em; 
+}

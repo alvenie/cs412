@@ -1,0 +1,60 @@
+<!-- voter_analytic/voter_list.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 10/31/2025 -->
+<!-- voter list template for voter_analytic app -->
+
+{% extends "voter_analytics/base.html" %}
+
+{% block content %}
+    <h1>Newton Voter List</h1>
+
+    {% include "voter_analytics/_filter_form.html" %}
+    
+    <hr>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Date of Birth</th>
+                <th>Party</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for voter in voters %}
+            <tr>
+                <td><a href="{% url 'voter_analytics:voter' voter.pk %}">{{ voter.first_name }} {{ voter.last_name }}</a></td>
+                <td>{{ voter.street_number }} {{ voter.street_name }}</td>
+                <td>{{ voter.dob }}</td>
+                <td>{{ voter.party_affiliation }}</td>
+                <td>{{ voter.voter_score }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No voters found matching your criteria.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1&{{ current_filters.urlencode }}">« first</a>
+                <a href="?page={{ page_obj.previous_page_number }}&{{ current_filters.urlencode }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&{{ current_filters.urlencode }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&{{ current_filters.urlencode }}">last »</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}

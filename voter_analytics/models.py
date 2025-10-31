@@ -39,8 +39,6 @@ class Voter(models.Model):
         """String representation of the Voter model."""
         return f"{self.first_name} {self.last_name} ({self.party_affiliation})"
     
-# ... (at the end of voter_analytics/models.py)
-
 def load_data(file_path='newton_voters.csv'):
     """
     Loads voter data from a CSV file into the Voter model.
@@ -52,14 +50,13 @@ def load_data(file_path='newton_voters.csv'):
         if not date_str:
             return None
         try:
-            # Adjust the format '%m/%d/%Y' if your CSV is different
-            return datetime.strptime(date_str, '%m/%d/%Y').date()
+            return datetime.strptime(date_str, '%Y-%m-%d').date()
         except ValueError:
             return None
 
-    # Helper function to parse 'X' into True
+    # Helper function to parse 'TRUE' into True
     def parse_bool(val):
-        return val.strip().upper() == 'X'
+        return val.strip().upper() == 'TRUE'
 
     # Clear existing data to avoid duplicates on re-run
     print("Deleting old voter data...")
@@ -81,8 +78,8 @@ def load_data(file_path='newton_voters.csv'):
                     zip_code=row['Residential Address - Zip Code'],
                     dob=parse_date(row['Date of Birth']),
                     registration_date=parse_date(row['Date of Registration']),
-                    party_affiliation=row['Party Affiliation'], # Stores 'U ', 'D ', etc.
-                    precinct_number=row['Precinct Number'].strip(), # Use .strip() to clean whitespace,
+                    party_affiliation=row['Party Affiliation'],
+                    precinct_number=row['Precinct Number'].strip(),
                     
                     v20state=parse_bool(row['v20state']),
                     v21town=parse_bool(row['v21town']),

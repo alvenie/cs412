@@ -1,0 +1,24 @@
+<!-- voter_analytic/base.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 10/31/2025 -->
+<!-- Base template for voter_analytic app -->
+
+{% load static %} 
+
+<html>
+    <head>
+        <title>Voter Analytics</title>
+        <link rel="stylesheet" href="{% static 'voter_analytics.css' %}">
+    </head>
+    <body>
+        <nav>
+            <a href="{% url 'voter_analytics:voters' %}">Voter List</a>
+        </nav>
+
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </body>
+</html>

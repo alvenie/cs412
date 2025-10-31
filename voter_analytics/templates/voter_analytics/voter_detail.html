@@ -1,0 +1,41 @@
+<!-- voter_analytic/voter_detail.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 10/31/2025 -->
+<!-- voter detail template for voter_analytic app -->
+
+{% extends "voter_analytics/base.html" %}
+
+{% block content %}
+    <a href="{% url 'voter_analytics:voters' %}">← Back to Voter List</a>
+
+    <h2>{{ voter.first_name }} {{ voter.last_name }}</h2>
+    
+    <p><strong>Party:</strong> {{ voter.party_affiliation }}</p>
+    <p><strong>Voter Score:</strong> {{ voter.voter_score }}</p>
+    <p><strong>Date of Birth:</strong> {{ voter.dob }}</p>
+    <p><strong>Registration Date:</strong> {{ voter.registration_date }}</p>
+    <p><strong>Precinct:</strong> {{ voter.precinct_number }}</p>
+
+    <h3>Address</h3>
+    <p>
+        {{ voter.street_number }} {{ voter.street_name }}<br>
+        {% if voter.apt_number %}
+            Apt {{ voter.apt_number }}<br>
+        {% endif %}
+        Newton, MA {{ voter.zip_code }}
+    </p>
+    
+    <a href="https://www.google.com/maps/search/?api=1&query={{ voter.street_number }} {{ voter.street_name }} Newton, MA {{ voter.zip_code }}|urlencode }}" target="_blank">
+        View on Google Maps
+    </a>
+
+    <h3>Election History</h3>
+    <ul>
+        <li>Voted in 2020 State: <strong>{{ voter.v20state }}</strong></li>
+        <li>Voted in 2021 Town: <strong>{{ voter.v21town }}</strong></li>
+        <li>Voted in 2021 Primary: <strong>{{ voter.v21primary }}</strong></li>
+        <li>Voted in 2022 General: <strong>{{ voter.v22general }}</strong></li>
+        <li>Voted in 2023 Town: <strong>{{ voter.v23town }}</strong></li>
+    </ul>
+{% endblock %}

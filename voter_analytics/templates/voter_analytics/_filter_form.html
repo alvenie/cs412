@@ -1,0 +1,66 @@
+<!-- voter_analytic/_filter_form.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 10/31/2025 -->
+<!-- reusable form for voter_analytic app -->
+
+<form method="get" action="{{ request.path }}">
+    <fieldset>
+        <legend>Filter Voters</legend>
+        
+        <label for="party">Party:</label>
+        <select name="party" id="party">
+            <option value="">All Parties</option>
+            {% for p in party_options %}
+                <option value="{{ p }}" {% if current_filters.party == p %}selected{% endif %}>
+                    {{ p }}
+                </option>
+            {% endfor %}
+        </select>
+        
+        <label for="min_dob_year">Born After (Year):</label>
+        <select name="min_dob_year" id="min_dob_year">
+            <option value="">Any</option>
+            {% for y in year_options %}
+                <option value="{{ y }}" {% if current_filters.min_dob_year == y|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="max_dob_year">Born Before (Year):</label>
+        <select name="max_dob_year" id="max_dob_year">
+            <option value="">Any</option>
+            {% for y in year_options %}
+                <option value="{{ y }}" {% if current_filters.max_dob_year == y|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="score">Voter Score:</label>
+        <select name="score" id="score">
+            <option value="">Any Score</option>
+            {% for s in score_options %}
+                <option value="{{ s }}" {% if current_filters.score == s|stringformat:"s" %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
+        
+        <fieldset>
+            <legend>Voted In:</legend>
+            <input type="checkbox" name="v20state" id="v20state" {% if current_filters.v20state %}checked{% endif %}>
+            <label for="v20state">2020 State</label>
+            
+            <input type="checkbox" name="v21town" id="v21town" {% if current_filters.v21town %}checked{% endif %}>
+            <label for="v21town">2021 Town</label>
+            
+            <input type="checkbox" name="v21primary" id="v21primary" {% if current_filters.v21primary %}checked{% endif %}>
+            <label for="v21primary">2021 Primary</label>
+            
+            <input type="checkbox" name="v22general" id="v22general" {% if current_filters.v22general %}checked{% endif %}>
+            <label for="v22general">2022 General</label>
+            
+            <input type="checkbox" name="v23town" id="v23town" {% if current_filters.v23town %}checked{% endif %}>
+            <label for="v23town">2023 Town</label>
+        </fieldset>
+        
+        <button type="submit">Apply Filters</button>
+        <a href="{{ request.path }}">Clear Filters</a>
+    </fieldset>
+</form>
