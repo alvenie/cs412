@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "blog", 
     "mini_insta",
     "voter_analytics",
+    "rest_framework",
     # NEW 
 ]
 
