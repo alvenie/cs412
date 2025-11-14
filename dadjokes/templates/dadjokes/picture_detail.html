@@ -1,0 +1,19 @@
+<!-- dadjokes/picture_details.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 11/13/2025 -->
+<!-- Picture Details template for dadjokes app -->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block title %}Picture #{{ picture.pk }}{% endblock %}
+
+{% block content %}
+    <h2>Picture Detail</h2>
+    <img src="{{ picture.image_url }}" alt="Silly picture">
+    <p class="contributor">From: {{ picture.contributor }}</p>
+    <p><small>Added on: {{ picture.created_at|date:"F d, Y" }}</small></p>
+
+    <br>
+    <a href="{% url 'all_pictures' %}"> Back to all pictures</a>
+{% endblock %}

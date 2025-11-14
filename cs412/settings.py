@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "mini_insta",
     "voter_analytics",
     "rest_framework",
+    "dadjokes",
     # NEW 
 ]
 
@@ -148,3 +149,9 @@ CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
     STATIC_URL = '/alvenie/static/'
     MEDIA_URL = '/alvenie/media/'
+
+## at the bottom of the file:
+REST_FRAMEWORK = {
+  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+  'PAGE_SIZE': 10
+}

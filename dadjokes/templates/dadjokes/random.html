@@ -1,0 +1,31 @@
+<!-- dadjokes/random.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 11/13/2025 -->
+<!-- Random template for dadjokes app -->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block title %}Random Joke & Picture{% endblock %}
+
+{% block content %}
+    <h2>Here's a random joke!</h2>
+    <!-- Check if joke exist else display message -->
+    {% if joke %}
+        <blockquote class="joke-text">"{{ joke.text }}"</blockquote>
+        <p class="contributor">- {{ joke.contributor }}</p>
+    {% else %}
+        <p>No jokes found in the database!</p>
+    {% endif %}
+
+    <hr>
+
+    <h2>And a random picture!</h2>
+    <!-- Check if picture exist else display message -->
+    {% if picture %}
+        <img src="{{ picture.image_url }}" alt="A silly picture">
+        <p class="contributor">From: {{ picture.contributor }}</p>
+    {% else %}
+        <p>No pictures found in the database!</p>
+    {% endif %}
+{% endblock %}
