@@ -1,0 +1,28 @@
+<!-- dadjokes/base.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 11/13/2025 -->
+<!-- Base template for dadjokes app -->
+
+{% load static %}
+<html>
+    <head>
+        <title>Dad Jokes</title>
+        <link rel="stylesheet" href="{% static 'dadjokes.css' %}">
+    </head>
+
+    <body>
+        <nav>
+            <a href="{% url 'random' %}">Random Joke & Picture</a>
+            <a href="{% url 'all_jokes' %}">All Jokes</a>
+            <a href="{% url 'all_pictures' %}">All Pictures</a>
+        </nav>
+
+        <main class="content-wrapper">
+            <div class="container">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+    </body>
+</html>

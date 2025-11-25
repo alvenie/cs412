@@ -1,0 +1,25 @@
+<!-- dadjokes/all_jokes.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 11/13/2025 -->
+<!-- All Jokes template for dadjokes app -->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block title %}All Jokes{% endblock %}
+
+{% block content %}
+    <h2>All Jokes</h2>
+    <ul>
+        <!-- For loop to display all jokes in the database -->
+        {% for joke in jokes %}
+            <li>
+                <p style="font-size: 1.2rem;">"{{ joke.text }}"</p>
+                <p class="contributor">- {{ joke.contributor }}</p>
+                <p><small><a href="{% url 'joke_detail' joke.pk %}">View details (Joke #{{ joke.pk }})</a></small></p>
+            </li>
+        {% empty %}
+            <li>No jokes have been added yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

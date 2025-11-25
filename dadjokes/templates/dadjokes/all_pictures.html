@@ -1,0 +1,25 @@
+<!-- dadjokes/all_pictures.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 11/13/2025 -->
+<!-- All Pictures template for dadjokes app -->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block title %}All Pictures{% endblock %}
+
+{% block content %}
+    <h2>All Pictures</h2>
+    <ul>
+        <!-- For loop to display all pictures in the database -->
+        {% for picture in pictures %}
+            <li>
+                <img src="{{ picture.image_url }}" alt="Silly picture" style="max-width: 500px;">
+                <p class="contributor">From: {{ picture.contributor }}</p>
+                <p><small><a href="{% url 'picture_detail' picture.pk %}">View details (Picture #{{ picture.pk }})</a></small></p>
+            </li>
+        {% empty %}
+            <li>No pictures have been added yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

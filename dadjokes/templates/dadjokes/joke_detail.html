@@ -1,0 +1,19 @@
+<!-- dadjokes/joke_detail.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 11/13/2025 -->
+<!-- Joke Detail template for dadjokes app -->
+
+{% extends 'dadjokes/base.html' %}
+
+{% block title %}Joke #{{ joke.pk }}{% endblock %}
+
+{% block content %}
+    <h2>Joke Detail</h2>
+    <blockquote class="joke-text">"{{ joke.text }}"</blockquote>
+    <p class="contributor">- {{ joke.contributor }}</p>
+    <p><small>Added on: {{ joke.created_at|date:"F d, Y" }}</small></p>
+    
+    <br>
+    <a href="{% url 'all_jokes' %}"> Back to all jokes</a>
+{% endblock %}
