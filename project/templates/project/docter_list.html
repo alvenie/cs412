@@ -1,0 +1,19 @@
+<!-- project/docter_list.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 11/25/2025 -->
+<!-- Docter list template for project app -->
+
+{% extends 'project/base.html' %}
+{% block content %}
+<h2>Our Doctors</h2>
+<ul>
+    {% for doctor in doctors %}
+        <li>
+            <a href="{% url 'doctor_detail' doctor.pk %}">
+                Dr. {{ doctor.last_name }} ({{ doctor.specialty }})
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

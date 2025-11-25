@@ -1,0 +1,15 @@
+<!-- project/book_appointment.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 11/25/2025 -->
+<!-- Book appointment template for project app -->
+
+{% extends 'project/base.html' %}
+{% block content %}
+<h2>Confirm Booking</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Confirm Appointment</button>
+</form>
+{% endblock %}
