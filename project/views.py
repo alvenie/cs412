@@ -59,6 +59,8 @@ class BookingCreateView(LoginRequiredMixin, CreateView):
     template_name = 'project/booking_form.html'
     success_url = reverse_lazy('profile')
 
+    login_url = 'login'
+
     def dispatch(self, request, *args, **kwargs):
         self.slot = get_object_or_404(AppointmentSlot, pk=self.kwargs['slot_id'])
         # Check if the slot is booked
