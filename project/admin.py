@@ -8,6 +8,9 @@ class SlotAdmin(admin.ModelAdmin):
     list_display = ('doctor', 'date', 'start_time', 'is_booked')
     list_filter = ('doctor', 'date', 'is_booked')
 
+@admin.register(AppointmentBooking)
+class BookingAdmin(admin.ModelAdmin):
+    list_display = ('patient', 'slot', 'booked_at')
+
 admin.site.register(Doctor)
 admin.site.register(Patient)
-admin.site.register(AppointmentBooking)

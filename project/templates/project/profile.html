@@ -1,0 +1,60 @@
+<!-- project/profile.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 12/02/2025 -->
+<!-- Profile template for project app -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Patient Profile</h1>
+
+    <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 30px;">
+        <h3>My Information</h3>
+        <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        
+        <!-- Only display if user is a patient. In case of admin login-->
+        {% if user.patient %}
+            <p><strong>Phone:</strong> {{ user.patient.phone }}</p>
+            <p><strong>Date of Birth:</strong> {{ user.patient.date_of_birth }}</p>
+            <a href="{% url 'edit_profile' %}" class="btn btn-small">Edit Contact Info</a>
+        {% else %}
+            <p class="text-danger">You are logged in as a Superuser (No Patient Profile found).</p>
+        {% endif %}
+    </div>
+
+    <h3>My Appointments</h3>
+    
+    {% if bookings %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Doctor</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.slot.date }}</td>
+                    <td>{{ booking.slot.start_time }} - {{ booking.slot.end_time}}</td>
+                    <td>Dr. {{ booking.slot.doctor.last_name }} ({{ booking.slot.doctor.specialty }})</td>
+                    <td>{{ booking.reason_for_visit }}</td>
+                    <td>
+                        <span style="color: green; font-weight: bold;">Confirmed</span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You have no upcoming appointments.</p>
+        <a href="{% url 'doctor_list' %}" class="btn">Find a Doctor</a>
+    {% endif %}
+</div>
+{% endblock %}

@@ -5,15 +5,30 @@
 <!-- Docter list template for project app -->
 
 {% extends 'project/base.html' %}
+
 {% block content %}
-<h2>Our Doctors</h2>
-<ul>
+<h1>Find a Specialist</h1>
+
+<form method="GET" class="search-bar">
+    <!--- Search filter -->
+    <input type="text" name="q" placeholder="Search by name or specialty..." value="{{ last_search }}">
+    <button type="submit">Search</button>
+    {% if request.GET.q %}
+        <a href="{% url 'doctor_list' %}" class="btn" style="background:#7f8c8d">Clear</a>
+    {% endif %}
+</form>
+
+<div class="doctor-grid">
+    <!-- Loop to display all matching doctors -->
     {% for doctor in doctors %}
-        <li>
-            <a href="{% url 'doctor_detail' doctor.pk %}">
-                Dr. {{ doctor.last_name }} ({{ doctor.specialty }})
-            </a>
-        </li>
+    <div class="doctor-card">
+        <h3>Dr. {{ doctor.last_name }}</h3>
+        <p style="color: #3498db; font-weight: bold;">{{ doctor.specialty }}</p>
+        <p>Dr. {{ doctor.first_name }} {{ doctor.last_name }} is available for appointments.</p>
+        <a href="{% url 'doctor_detail' doctor.pk %}" class="btn">View Profile & Schedule</a>
+    </div>
+    {% empty %}
+    <p>No doctors found matching your criteria.</p>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}

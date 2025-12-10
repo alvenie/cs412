@@ -1,0 +1,15 @@
+<!-- project/login.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 12/03/2025 -->
+<!-- Register template for project app -->
+
+{% extends 'project/base.html' %}
+{% block content %}
+<h2>Sign Up</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+</form>
+{% endblock %}

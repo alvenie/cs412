@@ -1,0 +1,46 @@
+<!-- project/patient_form.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 11/25/2025 -->
+<!-- Docter list template for project app -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="container" style="max-width: 500px; margin-top: 30px;">
+    
+    <h2>{% if form.instance.pk %}Edit Profile{% else %}Create Profile{% endif %}</h2>
+
+    <form method="post" class="form-group">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div style="margin-bottom: 20px;">
+                <label style="font-weight: bold; display: block; margin-bottom: 5px;">
+                    {{ field.label }}
+                </label>
+                
+                {{ field }}
+                
+                {% if field.help_text %}
+                    <small style="color: #666; display: block; margin-top: 4px;">
+                        {{ field.help_text }}
+                    </small>
+                {% endif %}
+
+                {% for error in field.errors %}
+                    <div style="color: #e74c3c; font-size: 0.9em; margin-top: 4px;">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <div style="margin-top: 20px;">
+            <button type="submit" class="btn">Save Changes</button>
+            
+            <a href="{% url 'profile' %}" class="btn" style="background-color: #95a5a6; margin-left: 10px;">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

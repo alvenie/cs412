@@ -1,0 +1,18 @@
+<!-- project/login.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 12/03/2025 -->
+<!-- Login template for project app -->
+
+{% extends 'project/base.html' %}
+{% block content %}
+<h2>Login</h2>
+<form method="post">
+    {% csrf_token %}
+
+    <input type="hidden" name="next" value="{% url 'profile' %}">
+
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+</form>
+{% endblock %}

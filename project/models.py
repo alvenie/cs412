@@ -1,12 +1,17 @@
 # project/models.py
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 class Doctor(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     specialty = models.CharField(max_length=100)
+    bio = models.TextField(blank=True, help_text="Short bio about the doctor.")
+    image_url = models.URLField(blank=True, help_text="Link to a profile image (optional)")
 
     def __str__(self):
         return f"Dr. {self.last_name} ({self.specialty})"
@@ -15,9 +20,12 @@ class Doctor(models.Model):
         return reverse('doctor_detail', kwargs={'pk': self.pk})
 
 class Patient(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='patient')
+
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=15)
     date_of_birth = models.DateField()
 
     def __str__(self):
@@ -38,7 +46,8 @@ class AppointmentSlot(models.Model):
         ordering = ['date', 'start_time']
 
     def __str__(self):
-        return f"{self.date} @ {self.start_time} - Dr. {self.doctor.last_name}"
+        status = "BOOKED" if self.is_booked else "OPEN"
+        return f"{self.date} @ {self.start_time} - {self.doctor.last_name} [{status}]"
 
 class AppointmentBooking(models.Model):
     """
