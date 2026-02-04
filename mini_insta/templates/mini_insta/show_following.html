@@ -9,17 +9,17 @@
 {% block content %}
 
 <div class="profile-detail">
-    <h1>Profiles followed by <a href="{% url 'show_profile' profile.pk %}" class="follow-a">@{{ profile.display_name }}</a></h1>
+    <h1>Profiles followed by <a href="{% url 'mini_insta:show_profile' profile.pk %}" class="follow-a">@{{ profile.display_name }}</a></h1>
     <hr>
 </div>
 
 <div class="follower-grid">
     {% for followed_profile in profile.get_following %}
         <div class="post-div">
-            <a href="{% url 'show_profile' followed_profile.pk %}">
+            <a href="{% url 'mini_insta:show_profile' followed_profile.pk %}">
                 <img src="{{ followed_profile.profile_image_url }}" alt="Avatar for {{ followed_profile.display_name }}" class="follower-grid-avatar">
             </a>
-            <a href="{% url 'show_profile' followed_profile.pk %}" class="follow-a">
+            <a href="{% url 'mini_insta:show_profile' followed_profile.pk %}" class="follow-a">
                 <span>@{{ followed_profile.display_name }}</span>
             </a>
         </div>

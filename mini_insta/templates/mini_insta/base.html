@@ -16,7 +16,7 @@
         
         <div class="header">
 
-            <a href ="{% url 'show_all_profiles' %}">
+            <a href ="{% url 'mini_insta:show_all_profiles' %}">
                 <h1>Mini Insta</h1>
             </a>
 
@@ -36,21 +36,21 @@
         <footer>
             <nav>
                 <!-- This link is always available -->
-                <a href="{% url 'show_all_profiles' %}">View All Profiles</a>
+                <a href="{% url 'mini_insta:show_all_profiles' %}">View All Profiles</a>
                 
                 <!-- These links will only be displayed on views that pass a single 'profile' object -->
                 {% if request.user.is_authenticated %}
                     {% if profile and user == profile.user %}
-                        <a href="{% url 'show_feed' %}" title="Home Feed"><i class="fas fa-home"></i> Feed</a>
-                        <a href="{% url 'search' %}" title="Search"><i class="fas fa-search"></i> Search</a>
-                        <a href="{% url 'create_post_form' %}">Create New Post</a>
+                        <a href="{% url 'mini_insta:show_feed' %}" title="Home Feed"><i class="fas fa-home"></i> Feed</a>
+                        <a href="{% url 'mini_insta:search' %}" title="Search"><i class="fas fa-search"></i> Search</a>
+                        <a href="{% url 'mini_insta:create_post_form' %}">Create New Post</a>
                     {% endif %}
-                    <form action="{% url 'logout' %}" method="POST">
+                    <form action="{% url 'mini_insta:logout' %}" method="POST">
                         {% csrf_token %}
                         <input type="submit" value="Logout" class="btn btn-logout">
                     </form>
                 {% else %}
-                    <form action="{% url 'login' %}">
+                    <form action="{% url 'mini_insta:login' %}">
                         {% csrf_token %}
                         <input type="submit" value="Login" class="btn btn-login">
                     </form>

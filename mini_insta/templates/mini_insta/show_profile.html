@@ -24,14 +24,14 @@
                 {% if request.user.profile != profile %} {# Can't follow self #}
                     {% if is_following %}
                         {# Already following, show Unfollow button #}
-                            <form action="{% url 'unfollow' profile.pk %}" method="POST" class="action-form">
+                            <form action="{% url 'mini_insta:unfollow' profile.pk %}" method="POST" class="action-form">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-cancel">Unfollow</button>
                             </form>
                     {% else %}
 
                         {# Not following, show Follow button #}
-                        <form action="{% url 'follow' profile.pk %}" method="POST" class="action-form">
+                        <form action="{% url 'mini_insta:follow' profile.pk %}" method="POST" class="action-form">
                             {% csrf_token %}
                             <button type="submit" class="btn">Follow</button>
                         </form>
@@ -39,7 +39,7 @@
                 {% else %}
 
                      {# This is the logged-in user's own profile #}
-                     <a href="{% url 'update_profile' %}" class="update-a">Edit Profile</a>
+                     <a href="{% url 'mini_insta:update_profile' %}" class="update-a">Edit Profile</a>
                 {% endif %}
             {% endif %}
         </div>
@@ -58,11 +58,11 @@
             </p>
 
             <p class="stats">
-                <a href="{% url 'show_followers' profile.pk %}" class="follow-a"><strong>Followers:</strong></a> {{ profile.get_num_followers }}
+                <a href="{% url 'mini_insta:show_followers' profile.pk %}" class="follow-a"><strong>Followers:</strong></a> {{ profile.get_num_followers }}
             </p>
 
             <p class="stats">
-                <a href="{% url 'show_following' profile.pk %}" class="follow-a"><strong>Following:</strong></a> {{ profile.get_num_following }}
+                <a href="{% url 'mini_insta:show_following' profile.pk %}" class="follow-a"><strong>Following:</strong></a> {{ profile.get_num_following }}
             </p>
 
         </div>
@@ -75,11 +75,11 @@
                     {% with photo=post.get_all_photos|first %}
                         <!-- checks if the photo exists and there is a url -->
                         {% if photo and photo.image_url %}
-                            <a href="{% url 'show_post' post.pk %}">
+                            <a href="{% url 'mini_insta:show_post' post.pk %}">
                                 <img src="{{photo.image_url}}" alt="First image of the post" class="post-img">
                             </a>
                         {% else %}
-                            <a href="{% url 'show_post' post.pk %}">
+                            <a href="{% url 'mini_insta:show_post' post.pk %}">
                                 <img src="https://i.postimg.cc/9Q2RqNVW/no-img-avail.jpg" alt="No image available" class="post-img">
                             </a>
 

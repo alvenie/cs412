@@ -13,17 +13,17 @@
     <div class="profile-info">
         <img src="{{ post.profile.profile_image_url }}" alt="profile" class="profile-avatar">
         <div class="profile-meta">
-            <a href="{% url 'show_profile' post.profile.pk %}" class="display-a">
+            <a href="{% url 'mini_insta:show_profile' post.profile.pk %}" class="display-a">
                 <h2>@{{ post.profile.display_name }}</h2>
             </a>
             <p>{{ post.profile.username }}</p>
             {% if request.user.is_authenticated %}
                 {% if user == post.profile.user %}
                     <div>
-                        <a href="{% url 'update_post' post.pk %}" class="update-a">Update Post</a>
+                        <a href="{% url 'mini_insta:update_post' post.pk %}" class="update-a">Update Post</a>
                     </div>
                     <div>
-                        <a href="{% url 'delete_post' post.pk %}" class="update-a">Delete Post</a>       
+                        <a href="{% url 'mini_insta:delete_post' post.pk %}" class="update-a">Delete Post</a>       
                     </div>
                 {% endif %}
             {% endif %}
@@ -34,13 +34,13 @@
                     {# --- Check the boolean from the view context --- #}
                     {% if is_liked %}
                         {# Already liked, show Unlike button #}
-                        <form action="{% url 'unlike' post.pk %}" method="POST" class="like-form">
+                        <form action="{% url 'mini_insta:unlike' post.pk %}" method="POST" class="like-form">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-cancel btn-small">Unlike Post</button>
                         </form>
                     {% else %}
                         {# Not liked, show Like button #}
-                        <form action="{% url 'like' post.pk %}" method="POST" class="like-form">
+                        <form action="{% url 'mini_insta:like' post.pk %}" method="POST" class="like-form">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-small">Like Post</button>
                         </form>
@@ -75,7 +75,7 @@
                     <p>
                         Liked by 
                         <strong>
-                            <a href="{% url 'show_profile' likes.first.profile.pk %}" class="display-a">
+                            <a href="{% url 'mini_insta:show_profile' likes.first.profile.pk %}" class="display-a">
                                 @{{ likes.first.profile.display_name }}
                             </a>
                         </strong>
@@ -92,7 +92,7 @@
 
                 <div> 
                     <p>
-                        <a href="{% url 'show_profile' comment.profile.pk %}" class="display-a">
+                        <a href="{% url 'mini_insta:show_profile' comment.profile.pk %}" class="display-a">
                             <strong>@{{comment.profile.display_name}}:</strong>
                         </a>{{comment.text}}
                     </p>

@@ -30,7 +30,7 @@
             {% csrf_token %}
             <button type="submit" class="btn">Confirm Delete</button>
 
-        <a href="{% url 'show_profile' profile.pk %}" class="btn btn-cancel">Cancel</a>
+        <a href="{% url 'mini_insta:show_profile' profile.pk %}" class="btn btn-cancel">Cancel</a>
         </form>
     </div>
 

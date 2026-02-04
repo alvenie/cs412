@@ -31,7 +31,7 @@ class LoginRequiredMixin(LoginRequiredMixin):
     
     def get_login_url(self):
         """ Override the default login URL to point to our app's 'login' page. """
-        return reverse_lazy('login')
+        return reverse_lazy('mini_insta:login')
     
 class ProfileListView(ListView):
     '''Define a view class to show all mini insta Profiles.'''
@@ -102,7 +102,7 @@ class CreatePostView(LoginRequiredMixin, CreateView):
         '''Provide a URL to redirect to after creating a new Post.'''
 
         # Redirect back to the profile page, not an 'article' page
-        return reverse('show_post', kwargs={'pk': self.object.pk})
+        return reverse('mini_insta:show_post', kwargs={'pk': self.object.pk})
     
     def get_context_data(self, **kwargs):
         '''Passes the parent Profile object to the template.'''
@@ -174,7 +174,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         pk = self.object.pk
         
         # Reverse the URL pattern for the profile detail page
-        return reverse('show_profile', kwargs={'pk': pk})
+        return reverse('mini_insta:show_profile', kwargs={'pk': pk})
     
     def get_object(self):
         """Return the Profile object for the currently logged-in user."""
@@ -202,7 +202,7 @@ class DeletePostView(LoginRequiredMixin, DeleteView):
         """Redirect to the user's profile page after deleting a post."""
         # Get the profile associated with the post that was just deleted
         profile_pk = self.object.profile.pk
-        return reverse('show_profile', kwargs={'pk': profile_pk})
+        return reverse('mini_insta:show_profile', kwargs={'pk': profile_pk})
     
 class UpdatePostView(LoginRequiredMixin, UpdateView):
     """A view to handle updating a post."""
@@ -218,7 +218,7 @@ class UpdatePostView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         """Redirect to the post's detail page after a successful update."""
-        return reverse('show_post', kwargs={'pk': self.object.pk})
+        return reverse('mini_insta:show_post', kwargs={'pk': self.object.pk})
     
 class ShowFollowersDetailView(DetailView):
     '''A view to handle showing follower details'''
@@ -364,7 +364,7 @@ class CreateProfileView(CreateView):
     def get_success_url(self):
         """Redirect to the new profile's detail page after creation."""
         # self.object is the new Profile instance set by super().form_valid()
-        return reverse('show_profile', kwargs={'pk': self.object.pk})
+        return reverse('mini_insta:show_profile', kwargs={'pk': self.object.pk})
 
 class AddFollowView(LoginRequiredMixin, TemplateView):
     """ Creates a Follow relationship """
@@ -382,7 +382,7 @@ class AddFollowView(LoginRequiredMixin, TemplateView):
         Follow.objects.get_or_create(profile=profile_to_follow, follower_profile=follower_profile)
 
         # Redirect back to the profile page being viewed
-        return redirect('show_profile', pk=self.kwargs['pk'])
+        return redirect('mini_insta:show_profile', pk=self.kwargs['pk'])
 
 class DeleteFollowView(LoginRequiredMixin, TemplateView):
     """ Deletes a Follow relationship """
@@ -396,7 +396,7 @@ class DeleteFollowView(LoginRequiredMixin, TemplateView):
         Follow.objects.filter(profile=profile_to_unfollow, follower_profile=follower_profile).delete()
 
         # Redirect back to the profile page
-        return redirect('show_profile', pk=self.kwargs['pk'])
+        return redirect('mini_insta:show_profile', pk=self.kwargs['pk'])
 
 class AddLikeView(LoginRequiredMixin, TemplateView):
     """ Creates a Like relationship """
@@ -413,7 +413,7 @@ class AddLikeView(LoginRequiredMixin, TemplateView):
         Like.objects.get_or_create(post=post, profile=liker_profile)
 
         # Redirect back to the post detail page
-        return redirect('show_post', pk=self.kwargs['pk'])
+        return redirect('mini_insta:show_post', pk=self.kwargs['pk'])
 
 
 class DeleteLikeView(LoginRequiredMixin, TemplateView):
@@ -428,4 +428,4 @@ class DeleteLikeView(LoginRequiredMixin, TemplateView):
         Like.objects.filter(post=post, profile=liker_profile).delete()
 
         # Redirect back to the post detail page
-        return redirect('show_post', pk=self.kwargs['pk'])
+        return redirect('mini_insta:show_post', pk=self.kwargs['pk'])

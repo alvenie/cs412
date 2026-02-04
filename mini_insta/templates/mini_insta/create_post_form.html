@@ -16,7 +16,7 @@
 <div class="post-div">
 
     <!-- form for creating the post -->
-    <form action="{% url 'create_post_form'      %}" method="POST" enctype="multipart/form-data">
+    <form action="{% url 'mini_insta:create_post_form' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             {{ form.as_table }}
@@ -31,7 +31,7 @@
         <div class="form-actions">
             <button type="submit" class="btn">Create Post</button>
             
-            <a href="{% url 'show_profile' profile.pk %}" class="btn btn-cancel">Cancel</a>
+            <a href="{% url 'mini_insta:show_profile' profile.pk %}" class="btn btn-cancel">Cancel</a>
         </div>
     </form>
 </div>

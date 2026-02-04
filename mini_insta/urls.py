@@ -10,6 +10,8 @@ from .views import *
 # generic view for authentication/authorization
 from django.contrib.auth import views as auth_views
 
+app_name = 'mini_insta'
+
 urlpatterns = [
     path('', ProfileListView.as_view(), name='show_all_profiles'),
     path('profile/<int:pk>/', ProfileDetailView.as_view(), name='show_profile'),
