@@ -1,0 +1,50 @@
+<!-- project/docter_detail.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 11/25/2025 -->
+<!-- Doctor detail template for project app -->
+
+{% extends 'project/base.html' %}
+
+{% block content %}
+<a href="{% url 'doctor_list' %}">&larr; Back to Directory</a>
+
+<div style="margin-top: 20px;">
+    <h1>Dr. {{ doctor.first_name }} {{ doctor.last_name }}</h1>
+    <h3>{{ doctor.specialty }}</h3>
+    {% if doctor.bio %}
+        <p><em>{{ doctor.bio }}</em></p>
+    {% endif %}
+</div>
+
+<hr>
+
+<h2>Available Time Slots</h2>
+<p>Select a time to book an appointment:</p>
+
+{% if available_slots %}
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for slot in available_slots %}
+            <tr>
+                <td>{{ slot.date }}</td>
+                <td>{{ slot.start_time }} - {{ slot.end_time }}</td>
+                <td>
+                    <a href="{% url 'book_appointment' slot.pk %}" class="btn btn-small">Book This Slot</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="alert">No appointments available for this doctor currently.</p>
+{% endif %}
+
+{% endblock %}

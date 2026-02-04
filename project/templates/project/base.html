@@ -1,0 +1,45 @@
+<!-- project/base.html -->
+<!-- Chonghao Chen --> 
+<!-- alvenie@bu.edu --> 
+<!-- 11/25/2025 -->
+<!-- Base template for project app -->
+
+{% load static %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>MediBook System</title>
+        <link rel="stylesheet" href="{% static 'project.css' %}">
+    </head>
+    <body>
+        <nav>
+            <div class="brand"><a href="{% url 'doctor_list' %}">MediBook</a></div>
+            <div>
+                <!-- Authication check to display the neccessary navigation -->
+                {% if user.is_authenticated %}
+                    <span>Hello, {{ user.first_name|default:user.username }}</span>
+                    
+                    <span style="margin: 0 10px; color: rgba(255,255,255,0.5);">|</span>
+
+                    <a href="{% url 'profile' %}">My Profile</a>
+
+                    <span style="margin: 0 10px; color: rgba(255,255,255,0.5);">|</span>
+
+                    <form action="{% url 'logout' %}?next={% url 'doctor_list' %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-small">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                    <span style="margin: 0 10px;">|</span>
+                    <a href="{% url 'register' %}">Sign Up</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
