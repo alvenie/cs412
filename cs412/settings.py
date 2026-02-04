@@ -147,6 +147,12 @@ import socket
 CS_DEPLOYMENT_HOSTNAME = 'cs-webapps.bu.edu'
 
 if socket.gethostname() == CS_DEPLOYMENT_HOSTNAME:
+    # This tells Django that every URL it generates should start with this prefix
+    FORCE_SCRIPT_NAME = '/alvenie'
+    # Ensure login redirects stay within subfolder
+    LOGIN_URL = '/alvenie/mini_insta/login/'
+    LOGIN_REDIRECT_URL = '/alvenie/mini_insta/'
+
     STATIC_URL = '/alvenie/static/'
     MEDIA_URL = '/alvenie/media/'
 
