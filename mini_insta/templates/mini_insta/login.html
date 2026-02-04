@@ -13,7 +13,7 @@
     </div>
 
     <div class="post-div">
-        <form action="{% url 'login' %}" method="POST">
+        <form action="{% url 'mini_insta:login' %}" method="POST">
 
             {% csrf_token %}
 
@@ -30,13 +30,13 @@
             {% if request.GET.next %}
                 <input type="hidden" name="next" value="{{request.GET.next}}">
             {% else %}
-                <input type="hidden" name="next" value="{% url 'show_all_profiles' %}">
+                <input type="hidden" name="next" value="{% url 'mini_insta:show_all_profiles' %}">
             {% endif %}
         </form>
 
         <hr>
         <p>
-            Don't have an account? <a href="{% url 'create_profile' %}" class="register-a">Register here</a>
+            Don't have an account? <a href="{% url 'mini_insta:create_profile' %}" class="register-a">Register here</a>
         </p>
     </div>
 {% endblock %}

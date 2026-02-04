@@ -26,7 +26,7 @@ urlpatterns = [
     path("formdata/", include("formdata.urls")), 
     path("restaurant/", include("restaurant.urls")),
     path("blog/", include("blog.urls")), 
-    path("mini_insta/", include("mini_insta.urls")), 
+    path("mini_insta/", include("mini_insta.urls", namespace="mini_insta")), 
     path("voter_analytics/", include("voter_analytics.urls")), 
     path("project/", include("project.urls")), # NEW
     path("dadjokes/", include("dadjokes.urls")), # NEW
